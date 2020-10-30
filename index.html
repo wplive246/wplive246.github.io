@@ -167,6 +167,100 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-信息安全管理与评估第一阶段习题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/30/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E4%B8%8E%E8%AF%84%E4%BC%B0%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E4%B9%A0%E9%A2%98/">信息安全管理与评估第一阶段习题</a>
+    </h1>
+  
+
+	
+        
+        <a href="/2020/10/30/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E4%B8%8E%E8%AF%84%E4%BC%B0%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E4%B9%A0%E9%A2%98/" class="archive-article-date">
+  	<time datetime="2020-10-30T10:02:44.515Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-30</time>
+</a>
+
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h6 id="1-总部核心交换机DCRS上开启SSH远程管理功能-本地认证用户名-2019DCN-密码：DCN2012"><a href="#1-总部核心交换机DCRS上开启SSH远程管理功能-本地认证用户名-2019DCN-密码：DCN2012" class="headerlink" title="1.总部核心交换机DCRS上开启SSH远程管理功能, 本地认证用户名:2019DCN,密码：DCN2012"></a>1.总部核心交换机DCRS上开启SSH远程管理功能, 本地认证用户名:2019DCN,密码：DCN2012</h6> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh-server enable &#x2F;&#x2F;打开ssh服务</span><br><span class="line">username  2019DCN  privilege 15 password DCN2012 &#x2F;&#x2F;创建用户2019DCN  级别15  密码为DCN2012</span><br></pre></td></tr></table></figure>
+<h6 id="2-总部启用MSTP协议，NAME为DCN2012、-Revision-level-1，实例1中包括VLAN10；实例2中包括VLAN20、要求两条链路负载分担-其中VLAN10业务数据在E1-0-4进行数据转发，要求VLAN20业务数据在E1-0-5进行数据转发，通过在DCWS两个端口设置COST值-2000000实现-配置DCRS连接终端接口立即进入转发模式且在收到BPDU时自动关闭端口-防止从DCWS方向的根桥抢占攻击"><a href="#2-总部启用MSTP协议，NAME为DCN2012、-Revision-level-1，实例1中包括VLAN10；实例2中包括VLAN20、要求两条链路负载分担-其中VLAN10业务数据在E1-0-4进行数据转发，要求VLAN20业务数据在E1-0-5进行数据转发，通过在DCWS两个端口设置COST值-2000000实现-配置DCRS连接终端接口立即进入转发模式且在收到BPDU时自动关闭端口-防止从DCWS方向的根桥抢占攻击" class="headerlink" title="2.总部启用MSTP协议，NAME为DCN2012、 Revision-level 1，实例1中包括VLAN10；实例2中包括VLAN20、要求两条链路负载分担,其中VLAN10业务数据在E1/0/4进行数据转发，要求VLAN20业务数据在E1/0/5进行数据转发，通过在DCWS两个端口设置COST值 2000000实现;配置DCRS连接终端接口立即进入转发模式且在收到BPDU时自动关闭端口;防止从DCWS方向的根桥抢占攻击;"></a>2.总部启用MSTP协议，NAME为DCN2012、 Revision-level 1，实例1中包括VLAN10；实例2中包括VLAN20、要求两条链路负载分担,其中VLAN10业务数据在E1/0/4进行数据转发，要求VLAN20业务数据在E1/0/5进行数据转发，通过在DCWS两个端口设置COST值 2000000实现;配置DCRS连接终端接口立即进入转发模式且在收到BPDU时自动关闭端口;防止从DCWS方向的根桥抢占攻击;</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">DCRS</span><br><span class="line">DCRS(config)#spanning-tree &#x2F;&#x2F;开启生成树</span><br><span class="line">DCRS(config)#spanning-tree mode  mstp &#x2F;&#x2F;开启mstp协议</span><br><span class="line">DCRS(config)#spanning-tree mst  configuration &#x2F;&#x2F;进入mstp的配置模式</span><br><span class="line">DCRS(config-mstp-region)#name DCN2012 </span><br><span class="line">DCRS(config-mstp-region)#revision-level 1 &#x2F;&#x2F;设置mstp版本级别为1</span><br><span class="line">DCRS(config-mstp-region)#instance  1 vlan 10 &#x2F;&#x2F; 实列1中的vlan有10</span><br><span class="line">DCRS(config-mstp-region)#instance 2 vlan  20 &#x2F;&#x2F;实列2中的vlan有20</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/30/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E4%B8%8E%E8%AF%84%E4%BC%B0%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E4%B9%A0%E9%A2%98/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+<section id="comments" class="comments">
+  <style>
+    .comments{margin:30px;padding:10px;background:#fff}
+    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+  </style>
+  <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '.comment',
+            notify: notify,
+            verify: verify,
+            app_id: "oUkB3jHpUeq2naBH6VNtAzui-gzGzoHsz",
+            app_key: "YQiUhUmLBneTQKg4kgSG2zK4",
+            placeholder: "欢迎留言",
+            avatar:""
+        });
+    }
+</script>
+
+  </section>
+
+
+  
     <article id="post-岁月之痛" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -325,98 +419,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/05/28/Markdown%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-<section id="comments" class="comments">
-  <style>
-    .comments{margin:30px;padding:10px;background:#fff}
-    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-  </style>
-  <div id="vcomment" class="comment"></div> 
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        new Valine({
-            el: '.comment',
-            notify: notify,
-            verify: verify,
-            app_id: "oUkB3jHpUeq2naBH6VNtAzui-gzGzoHsz",
-            app_key: "YQiUhUmLBneTQKg4kgSG2zK4",
-            placeholder: "欢迎留言",
-            avatar:""
-        });
-    }
-</script>
-
-  </section>
-
-
-  
-    <article id="post-Cisco-EVE-ng-平台搭建" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/27/Cisco-EVE-ng-%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/">Cisco EVE-ng 平台搭建</a>
-    </h1>
-  
-
-	
-        
-        <a href="/2020/05/27/Cisco-EVE-ng-%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" class="archive-article-date">
-  	<time datetime="2020-05-27T04:36:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-27</time>
-</a>
-
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/27/Cisco-EVE-ng-%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/">展开全文 >></a>
         </p>
       
 
