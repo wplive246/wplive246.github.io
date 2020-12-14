@@ -6,21 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>浏览器中安装BurpsuiteCA证书 | 成长之旅</title>
+  <title>Powershell | 成长之旅</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="浏览器 中安装 Burpsuite CA 证书 使用系统管理员去权限 打开浏览器 在浏览器中输入HTTP:&#x2F;&#x2F;burp&#x2F; 安装   就 步骤步骤 Burpsuite proxy 模块 intercept介绍123456* Forward*表示将截段的HTTP或HTTPS请求发送到服务器* Drop 表示将截段的HTTP或HTTPS请求丢弃* intercept is on 和 intercept">
+  <meta name="description" content="Powershell">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浏览器中安装BurpsuiteCA证书">
-<meta property="og:url" content="http://yoursite.com/2020/12/13/%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E5%AE%89%E8%A3%85BurpsuiteCA%E8%AF%81%E4%B9%A6/index.html">
+<meta property="og:title" content="Powershell">
+<meta property="og:url" content="http://yoursite.com/2020/12/14/Powershell/index.html">
 <meta property="og:site_name" content="成长之旅">
-<meta property="og:description" content="浏览器 中安装 Burpsuite CA 证书 使用系统管理员去权限 打开浏览器 在浏览器中输入HTTP:&#x2F;&#x2F;burp&#x2F; 安装   就 步骤步骤 Burpsuite proxy 模块 intercept介绍123456* Forward*表示将截段的HTTP或HTTPS请求发送到服务器* Drop 表示将截段的HTTP或HTTPS请求丢弃* intercept is on 和 intercept">
+<meta property="og:description" content="Powershell">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://i.loli.net/2020/11/25/sQm7zvVyiSOAEo2.png">
-<meta property="article:published_time" content="2020-12-13T06:08:24.208Z">
-<meta property="article:modified_time" content="2020-12-13T06:08:24.208Z">
+<meta property="article:published_time" content="2020-12-14T08:16:39.903Z">
+<meta property="article:modified_time" content="2020-12-14T08:16:39.903Z">
 <meta property="article:author" content="W P">
+<meta property="article:tag" content="--windows --系统">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2020/11/25/sQm7zvVyiSOAEo2.png">
   
     <link rel="alternative" href="/atom.xml" title="成长之旅" type="application/atom+xml">
   
@@ -155,14 +154,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-浏览器中安装BurpsuiteCA证书" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Powershell" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      浏览器中安装BurpsuiteCA证书
+      Powershell
     </h1>
   
 
@@ -172,8 +171,8 @@
 		</span>
 	
         
-        <a href="/2020/12/13/%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E5%AE%89%E8%A3%85BurpsuiteCA%E8%AF%81%E4%B9%A6/" class="archive-article-date">
-  	<time datetime="2020-12-13T06:08:24.208Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-13</time>
+        <a href="/2020/12/14/Powershell/" class="archive-article-date">
+  	<time datetime="2020-12-14T08:16:39.903Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-14</time>
 </a>
 
 
@@ -182,20 +181,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h5 id="浏览器-中安装-Burpsuite-CA-证书"><a href="#浏览器-中安装-Burpsuite-CA-证书" class="headerlink" title="浏览器 中安装 Burpsuite CA 证书"></a>浏览器 中安装 Burpsuite CA 证书</h5><ol>
-<li>使用系统管理员去权限 打开浏览器</li>
-<li>在浏览器中输入HTTP://burp/</li>
-<li>安装   就 步骤步骤 <h6 id="Burpsuite-proxy-模块-intercept介绍"><a href="#Burpsuite-proxy-模块-intercept介绍" class="headerlink" title="Burpsuite proxy 模块 intercept介绍"></a>Burpsuite proxy 模块 intercept介绍</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* Forward*表示将截段的HTTP或HTTPS请求发送到服务器</span><br><span class="line">* Drop 表示将截段的HTTP或HTTPS请求丢弃</span><br><span class="line">* intercept is on 和 intercept is on 表示开启或关闭代理截段功能。</span><br><span class="line">* Action表示将代理截段的HTTP或HTTPS请求发送到其他模块或其他处理</span><br><span class="line">* 对intercept 进行 Raw Hex params header 切换查看不同的数据格式</span><br></pre></td></tr></table></figure>
-<h6 id="Burpsuite-proxy-模块-http-historg介绍"><a href="#Burpsuite-proxy-模块-http-historg介绍" class="headerlink" title="Burpsuite proxy 模块 http historg介绍"></a>Burpsuite proxy 模块 http historg介绍</h6><code>http historg 用来查看提交过的http请求
-Filter可以过滤显示某些http请求，点击filter就可以打开，对于指定URL可以选中右键点击执行其他操作，websockets historg 与http historg功能</code><h6 id="Burpsuite-proxy-模块-options介绍"><a href="#Burpsuite-proxy-模块-options介绍" class="headerlink" title="Burpsuite proxy 模块 options介绍"></a>Burpsuite proxy 模块 options介绍</h6></li>
-</ol>
-<p><strong>options具有的功能：</strong>代理监听设置，截段客户端请求，截段服务器响应，截段websocke通信，服务器响应修改（绕过JS验证文件上传）、匹配与替换HTTP消息中的内容、通过SSL连接web服务器配置、 其他配置选项</p>
-<h6 id="设置proxy-Listener"><a href="#设置proxy-Listener" class="headerlink" title="设置proxy Listener"></a>设置proxy Listener</h6><p><strong>通过设置Proxy Listeners 来截段数据流量,比如设置监听端口等</strong></p>
-<h6 id="设置intercept-Client-Requests"><a href="#设置intercept-Client-Requests" class="headerlink" title="设置intercept Client Requests"></a>设置intercept Client Requests</h6><p><strong>通过设置Intercept client Requests 来截断符合条件的HTTP请求</strong></p>
-<h6 id="设置intercept-Server-Requests"><a href="#设置intercept-Server-Requests" class="headerlink" title="设置intercept Server Requests"></a>设置intercept Server Requests</h6><p><strong>通过设置Intercept server Requests 来截断符合条件的HTTP请求</strong></p>
-<h6 id="设置intercept-WebSockets-messages"><a href="#设置intercept-WebSockets-messages" class="headerlink" title="设置intercept WebSockets messages"></a>设置intercept WebSockets messages</h6><p><strong>设置截段Websocke通信以及修改Response的内容</strong></p>
-<h6 id="Response-modification"><a href="#Response-modification" class="headerlink" title="Response modification"></a>Response modification</h6><p><strong>设置Response modification （设置响应内容）</strong><br><img src="https://i.loli.net/2020/11/25/sQm7zvVyiSOAEo2.png" alt="1"></p>
-
+        <h1 id="Powershell"><a href="#Powershell" class="headerlink" title="Powershell"></a>Powershell</h1><a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Get-Service -name BITS &#x2F;&#x2F;获取服务</span><br><span class="line">Start-server -name BITS&#x2F;&#x2F;启动服务</span><br><span class="line">Get-Disk&#x2F;&#x2F;获取磁盘</span><br><span class="line">Get-phsicaldisk&#x2F;&#x2F;获取物理磁盘</span><br><span class="line">动词-名词 &#x2F;&#x2F;命令解释</span><br><span class="line">Get-verb &#x2F;&#x2F;获取类似get的所有命令</span><br></pre></td></tr></table></figure>
+<p>get-server #获取服务<br><em>-</em> #后面跟参数<br>BITS  #实参</p>
+<p>-whatif //提示命令的作用但不执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Restart-Computer -whatif  &#x2F;&#x2F;提示命令的作用但不执行</span><br></pre></td></tr></table></figure>
+<p>引用对象属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">列如：（Get-windowsfeature).name &#x2F;&#x2F;获取对象的name属性Powershell</span><br></pre></td></tr></table></figure>
       
 
       
@@ -229,6 +221,17 @@ Filter可以过滤显示某些http请求，点击filter就可以打开，对于�
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">--windows --系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -279,7 +282,7 @@ Filter可以过滤显示某些http请求，点击filter就可以打开，对于�
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/12/13/%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E5%AE%89%E8%A3%85BurpsuiteCA%E8%AF%81%E4%B9%A6/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/12/14/Powershell/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -293,18 +296,18 @@ Filter可以过滤显示某些http请求，点击filter就可以打开，对于�
   
 <nav id="article-nav">
   
-    <a href="/2020/12/14/ENSP%E8%BF%9B%E5%85%A5%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5%E8%A7%86%E5%9B%BE/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/12/14/Linux/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          ENSP进入安全策略视图
+          LIUNX使用方法
         
       </div>
     </a>
   
   
-    <a href="/2020/12/13/%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87%E5%8D%8F%E8%AE%AE%E5%8A%A0%E6%9E%84/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">双机热备协议加构</div>
+    <a href="/2020/12/14/VRF%E6%84%9F%E7%9F%A5%E5%9E%8B%E9%98%B2%E7%81%AB%E5%A2%99/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">VRF基础介绍</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -464,11 +467,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">--AAA --知识</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">--LINUX --技术文化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">--markdown</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">--windows --系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">--神州数码 --DCN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">--网络 --ENSP</a>
               </li>
              
               <li class="article-tag-list-item">
