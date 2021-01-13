@@ -6,20 +6,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>LIUNX使用方法 | 成长之旅</title>
+  <title>Archives: 2021 | 成长之旅</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Liunx(8.0)用户分类 超级管理员（root）-UID&#x3D;0 系统用户（系统服务类的用户） 系统调用 已部署安装的服务（比如MySQL）   普通用户 UID&gt;1000 studentps：在实际生产环境中，系统管理员一般使普通用户去管理UID：user identificartion（用户的唯一身份标识）">
-<meta property="og:type" content="article">
-<meta property="og:title" content="LIUNX使用方法">
-<meta property="og:url" content="http://yoursite.com/2020/12/14/Linux/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="成长之旅">
+<meta property="og:url" content="http://yoursite.com/archives/2021/page/2/index.html">
 <meta property="og:site_name" content="成长之旅">
-<meta property="og:description" content="Liunx(8.0)用户分类 超级管理员（root）-UID&#x3D;0 系统用户（系统服务类的用户） 系统调用 已部署安装的服务（比如MySQL）   普通用户 UID&gt;1000 studentps：在实际生产环境中，系统管理员一般使普通用户去管理UID：user identificartion（用户的唯一身份标识）">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-12-14T08:25:55.626Z">
-<meta property="article:modified_time" content="2020-12-14T08:25:55.626Z">
 <meta property="article:author" content="W P">
-<meta property="article:tag" content="--LINUX
---技术文化">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="成长之旅" type="application/atom+xml">
@@ -155,231 +149,228 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Linux" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
+            
+  
+  
     
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      LIUNX使用方法
-    </h1>
-  
-
-	
-		<span class="archive-article-date">
-			阅读量 <span id="busuanzi_value_page_pv"></span>
-		</span>
-	
-        
-        <a href="/2020/12/14/Linux/" class="archive-article-date">
-  	<time datetime="2020-12-14T08:25:55.626Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-14</time>
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2021" class="archive-year">2021</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2021/01/13/%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87%E5%8D%8F%E8%AE%AE%E5%8A%A0%E6%9E%84/" class="archive-article-date">
+  	<time datetime="2021-01-13T01:56:33.520Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
 </a>
 
 
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Liunx-8-0"><a href="#Liunx-8-0" class="headerlink" title="Liunx(8.0)"></a>Liunx(8.0)</h2><h5 id="用户分类"><a href="#用户分类" class="headerlink" title="用户分类"></a>用户分类</h5><ul>
-<li>超级管理员（root）-UID=0</li>
-<li>系统用户（系统服务类的用户）<ul>
-<li>系统调用</li>
-<li>已部署安装的服务（比如MySQL）</li>
-</ul>
-</li>
-<li>普通用户 UID&gt;1000 student<br>ps：在实际生产环境中，系统管理员一般使普通用户去管理<br>UID：user identificartion（用户的唯一身份标识）<a id="more"></a>
-<h5 id="组"><a href="#组" class="headerlink" title="组"></a>组</h5></li>
-</ul>
-<ol>
-<li>特点：一个组当中可以包含多个用户,一个用户也可以属于多个组</li>
-<li>初始组（主要组）和附加组GID</li>
-<li>用户账户信息<h5 id="4-用户账户信息：系统本地用户信息存放在-etc-passwd中"><a href="#4-用户账户信息：系统本地用户信息存放在-etc-passwd中" class="headerlink" title="4. 用户账户信息：系统本地用户信息存放在/etc/passwd中"></a>4. 用户账户信息：系统本地用户信息存放在/etc/passwd中</h5><h6 id="文件特点"><a href="#文件特点" class="headerlink" title="文件特点"></a>文件特点</h6>root:x:0:0:root:/root:/bin/bash<br>bin:x:1:1:bin:/bin:/sbin/nologin<br>(1)每个用户占用一行，以：分隔为7个字段<br>（2）每个字段的作用<br>字段1（root）— 用户名<br>字段2（x）——用户密码（通常用x代替，密码单独通过SHA512加密存放在/etc/shadow）<br>字段3 （0）——用户的UID<br>字段4（0）—–用户的初始组（主要组）的GID<br>字段5（root）———用户的描述信息<br>字段6（/root）———用户的家目录<br>字段7（/bin/bash）—–用户的Shell类型<br>1&gt;root用户以及普通用户的设立了类型:/bin/bash<br>2&gt;系统用户的shell类型：/sbin/nologin</li>
-</ol>
-<h5 id="5-用户密码信息：存放在-etc-shadow文件中"><a href="#5-用户密码信息：存放在-etc-shadow文件中" class="headerlink" title="5.用户密码信息：存放在/etc/shadow文件中"></a>5.用户密码信息：存放在/etc/shadow文件中</h5><h6 id="文件特点-1"><a href="#文件特点-1" class="headerlink" title="文件特点"></a>文件特点</h6><p>bin:<em>:17784:0:99999:7:::<br>（1）每个用户占用一行，以：分隔9个字段<br>（2）每个字段的作用<br>字段1（bin）——-用户名<br>字段2 （\</em>）——–用户名的密码信息（采用sha512<br>加密），如果改用户的密码没有设置的话，会显示*，如果密码过期前面会加一个！<br>字段3（17784）——最近一次更改密码的日期（从1970年1算起，）<br>字段4（0）———-多少之内你不能更改密码，数字天数，0为无限制<br>字段5（99999）——多少天之后必须更改密码（99999表示无需更改）<br>字段6 (7) —–提前多少天提示改密码<br>字段7（默认为空）——到了改密码的时间后，多少的宽限时间，到了密码吗失效<br>字段8 （默认为空）— 账号失效日<br>字段9 （保留）</p>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢赞赏<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/zsm.png">
-                      <span class="reward-type">微信</span>
-                    </div>
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
         </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2021/01/13/%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87%E5%8D%8F%E8%AE%AE%E5%8A%A0%E6%9E%84/">网络备份介绍</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">--LINUX
---技术文化</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">---网络安全技术 ---备份</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/12/14/Linux/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
   
-<nav id="article-nav">
-  
-    <a href="/2020/12/14/Powershell/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Powershell
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2020/12/14/ENSP%E8%BF%9B%E5%85%A5%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5%E8%A7%86%E5%9B%BE/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">华为防火墙</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2021/01/13/%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/" class="archive-article-date">
+  	<time datetime="2021-01-13T01:56:33.512Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
+</a>
 
 
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
+    	 
   
-  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2021/01/13/%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/">日志管理</a>
+    </h1>
   
 
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">--红帽 --LINUX8</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2021/01/13/%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BF%9D%E6%8A%A4SSH/" class="archive-article-date">
+  	<time datetime="2021-01-13T01:56:33.508Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
+</a>
+
+
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2021/01/13/%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BF%9D%E6%8A%A4SSH/">SSH</a>
+    </h1>
   
 
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">--红帽 --LINUX8</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2021/01/13/%E8%BF%9B%E7%A8%8B/" class="archive-article-date">
+  	<time datetime="2021-01-13T01:56:33.488Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
+</a>
+
+
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2021/01/13/%E8%BF%9B%E7%A8%8B/">进程</a>
+    </h1>
   
 
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">--红帽 --LINUX8</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2021/01/13/%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E5%AE%89%E8%A3%85BurpsuiteCA%E8%AF%81%E4%B9%A6/" class="archive-article-date">
+  	<time datetime="2021-01-13T01:56:33.484Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
+</a>
+
+
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2021/01/13/%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E5%AE%89%E8%A3%85BurpsuiteCA%E8%AF%81%E4%B9%A6/">BUrpsuite浏览器</a>
+    </h1>
   
 
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">--Burpsuite
+--浏览器
+--证书</a>
+        		</li>
+      		
+		</ul>
+	</div>
 
-<section id="comments" class="comments">
-  <style>
-    .comments{margin:30px;padding:10px;background:#fff}
-    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-  </style>
-  <div id="vcomment" class="comment"></div> 
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        new Valine({
-            el: '.comment',
-            notify: notify,
-            verify: verify,
-            app_id: "oUkB3jHpUeq2naBH6VNtAzui-gzGzoHsz",
-            app_key: "YQiUhUmLBneTQKg4kgSG2zK4",
-            placeholder: "欢迎留言",
-            avatar:""
-        });
-    }
-</script>
+          
 
-  </section>
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+  
+    </div></section>
+  
+
+    
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/archives/2021/">&amp;laquo; Prev</a><a class="page-number" href="/archives/2021/">1</a><span class="page-number current">2</span>
+    </nav>
+  
 
 
           </div>
@@ -407,8 +398,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
@@ -483,10 +474,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">--防火墙 --知识</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">--LINUX
 --技术文化</a>
               </li>
@@ -501,7 +488,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">--防火墙 --知识</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">--网络 --ENSP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">---提权</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -514,6 +509,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">--岁月无情，忆珍惜 --作者：板板大人</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">--红帽 --LINUX8</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">--LINUX8.0 --红帽</a>
               </li>
              
               <li class="article-tag-list-item">

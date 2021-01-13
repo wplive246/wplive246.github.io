@@ -6,24 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>BUrpsuite浏览器 | 成长之旅</title>
+  <title>Tag: --红帽 --LINUX8 | 成长之旅</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="浏览器 中安装 Burpsuite CA 证书 使用系统管理员去权限 打开浏览器 在浏览器中输入HTTP:&#x2F;&#x2F;burp&#x2F; 安装   就 步骤步骤">
-<meta property="og:type" content="article">
-<meta property="og:title" content="BUrpsuite浏览器">
-<meta property="og:url" content="http://yoursite.com/2020/12/14/%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E5%AE%89%E8%A3%85BurpsuiteCA%E8%AF%81%E4%B9%A6/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="成长之旅">
+<meta property="og:url" content="http://yoursite.com/tags/%E7%BA%A2%E5%B8%BD-LINUX8/index.html">
 <meta property="og:site_name" content="成长之旅">
-<meta property="og:description" content="浏览器 中安装 Burpsuite CA 证书 使用系统管理员去权限 打开浏览器 在浏览器中输入HTTP:&#x2F;&#x2F;burp&#x2F; 安装   就 步骤步骤">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://i.loli.net/2020/11/25/sQm7zvVyiSOAEo2.png">
-<meta property="article:published_time" content="2020-12-14T08:27:19.980Z">
-<meta property="article:modified_time" content="2020-12-14T08:27:19.980Z">
 <meta property="article:author" content="W P">
-<meta property="article:tag" content="--Burpsuite
---浏览器
---证书">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2020/11/25/sQm7zvVyiSOAEo2.png">
   
     <link rel="alternative" href="/atom.xml" title="成长之旅" type="application/atom+xml">
   
@@ -158,232 +149,222 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-浏览器中安装BurpsuiteCA证书" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
+            
+  
+  
     
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      BUrpsuite浏览器
-    </h1>
-  
-
-	
-		<span class="archive-article-date">
-			阅读量 <span id="busuanzi_value_page_pv"></span>
-		</span>
-	
-        
-        <a href="/2020/12/14/%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E5%AE%89%E8%A3%85BurpsuiteCA%E8%AF%81%E4%B9%A6/" class="archive-article-date">
-  	<time datetime="2020-12-14T08:27:19.980Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-14</time>
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2021" class="archive-year">2021</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2021/01/13/%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90/" class="archive-article-date">
+  	<time datetime="2021-01-13T01:56:33.544Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
 </a>
 
 
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="浏览器-中安装-Burpsuite-CA-证书"><a href="#浏览器-中安装-Burpsuite-CA-证书" class="headerlink" title="浏览器 中安装 Burpsuite CA 证书"></a>浏览器 中安装 Burpsuite CA 证书</h5><ol>
-<li>使用系统管理员去权限 打开浏览器</li>
-<li>在浏览器中输入HTTP://burp/</li>
-<li>安装   就 步骤步骤 <a id="more"></a>
-
-</li>
-</ol>
-<h6 id="Burpsuite-proxy-模块-intercept介绍"><a href="#Burpsuite-proxy-模块-intercept介绍" class="headerlink" title="Burpsuite proxy 模块 intercept介绍"></a>Burpsuite proxy 模块 intercept介绍</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* Forward*表示将截段的HTTP或HTTPS请求发送到服务器</span><br><span class="line">* Drop 表示将截段的HTTP或HTTPS请求丢弃</span><br><span class="line">* intercept is on 和 intercept is on 表示开启或关闭代理截段功能。</span><br><span class="line">* Action表示将代理截段的HTTP或HTTPS请求发送到其他模块或其他处理</span><br><span class="line">* 对intercept 进行 Raw Hex params header 切换查看不同的数据格式</span><br></pre></td></tr></table></figure>
-<h6 id="Burpsuite-proxy-模块-http-historg介绍"><a href="#Burpsuite-proxy-模块-http-historg介绍" class="headerlink" title="Burpsuite proxy 模块 http historg介绍"></a>Burpsuite proxy 模块 http historg介绍</h6><p><code>http historg 用来查看提交过的http请求
-Filter可以过滤显示某些http请求，点击filter就可以打开，对于指定URL可以选中右键点击执行其他操作，websockets historg 与http historg功能</code></p>
-<h6 id="Burpsuite-proxy-模块-options介绍"><a href="#Burpsuite-proxy-模块-options介绍" class="headerlink" title="Burpsuite proxy 模块 options介绍"></a>Burpsuite proxy 模块 options介绍</h6><p><strong>options具有的功能：</strong>代理监听设置，截段客户端请求，截段服务器响应，截段websocke通信，服务器响应修改（绕过JS验证文件上传）、匹配与替换HTTP消息中的内容、通过SSL连接web服务器配置、 其他配置选项</p>
-<h6 id="设置proxy-Listener"><a href="#设置proxy-Listener" class="headerlink" title="设置proxy Listener"></a>设置proxy Listener</h6><p><strong>通过设置Proxy Listeners 来截段数据流量,比如设置监听端口等</strong></p>
-<h6 id="设置intercept-Client-Requests"><a href="#设置intercept-Client-Requests" class="headerlink" title="设置intercept Client Requests"></a>设置intercept Client Requests</h6><p><strong>通过设置Intercept client Requests 来截断符合条件的HTTP请求</strong></p>
-<h6 id="设置intercept-Server-Requests"><a href="#设置intercept-Server-Requests" class="headerlink" title="设置intercept Server Requests"></a>设置intercept Server Requests</h6><p><strong>通过设置Intercept server Requests 来截断符合条件的HTTP请求</strong></p>
-<h6 id="设置intercept-WebSockets-messages"><a href="#设置intercept-WebSockets-messages" class="headerlink" title="设置intercept WebSockets messages"></a>设置intercept WebSockets messages</h6><p><strong>设置截段Websocke通信以及修改Response的内容</strong></p>
-<h6 id="Response-modification"><a href="#Response-modification" class="headerlink" title="Response modification"></a>Response modification</h6><p><strong>设置Response modification （设置响应内容）</strong><br><img src="https://i.loli.net/2020/11/25/sQm7zvVyiSOAEo2.png" alt="1"></p>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢赞赏<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/zsm.png">
-                      <span class="reward-type">微信</span>
-                    </div>
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
         </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2021/01/13/%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90/">文件权限</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">--Burpsuite
---浏览器
---证书</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">--红帽 --LINUX8</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/12/14/%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E5%AE%89%E8%A3%85BurpsuiteCA%E8%AF%81%E4%B9%A6/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
   
-<nav id="article-nav">
-  
-    <a href="/2020/12/14/%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87%E5%8D%8F%E8%AE%AE%E5%8A%A0%E6%9E%84/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          网络备份介绍
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2020/12/14/Powershell/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Powershell</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2021/01/13/%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86/" class="archive-article-date">
+  	<time datetime="2021-01-13T01:56:33.536Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
+</a>
 
 
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
+    	 
   
-  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2021/01/13/%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86/">网络管理</a>
+    </h1>
   
 
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">--红帽 --LINUX8</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2021/01/13/%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/" class="archive-article-date">
+  	<time datetime="2021-01-13T01:56:33.512Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
+</a>
+
+
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2021/01/13/%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/">日志管理</a>
+    </h1>
   
 
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">--红帽 --LINUX8</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2021/01/13/%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BF%9D%E6%8A%A4SSH/" class="archive-article-date">
+  	<time datetime="2021-01-13T01:56:33.508Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
+</a>
+
+
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2021/01/13/%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BF%9D%E6%8A%A4SSH/">SSH</a>
+    </h1>
   
 
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">--红帽 --LINUX8</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2021/01/13/%E8%BF%9B%E7%A8%8B/" class="archive-article-date">
+  	<time datetime="2021-01-13T01:56:33.488Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
+</a>
+
+
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2021/01/13/%E8%BF%9B%E7%A8%8B/">进程</a>
+    </h1>
   
 
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">--红帽 --LINUX8</a>
+        		</li>
+      		
+		</ul>
+	</div>
 
-<section id="comments" class="comments">
-  <style>
-    .comments{margin:30px;padding:10px;background:#fff}
-    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-  </style>
-  <div id="vcomment" class="comment"></div> 
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        new Valine({
-            el: '.comment',
-            notify: notify,
-            verify: verify,
-            app_id: "oUkB3jHpUeq2naBH6VNtAzui-gzGzoHsz",
-            app_key: "YQiUhUmLBneTQKg4kgSG2zK4",
-            placeholder: "欢迎留言",
-            avatar:""
-        });
-    }
-</script>
+          
 
-  </section>
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+  
+    </div></section>
+  
+
+    
 
 
           </div>
@@ -411,9 +392,9 @@ Filter可以过滤显示某些http请求，点击filter就可以打开，对于�
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
@@ -487,10 +468,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">--防火墙 --知识</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">--LINUX
 --技术文化</a>
               </li>
@@ -505,7 +482,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">--防火墙 --知识</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">--网络 --ENSP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">---提权</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -518,6 +503,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">--岁月无情，忆珍惜 --作者：板板大人</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">--红帽 --LINUX8</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">--LINUX8.0 --红帽</a>
               </li>
              
               <li class="article-tag-list-item">

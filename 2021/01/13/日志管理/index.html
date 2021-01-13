@@ -20,9 +20,10 @@
 <meta property="og:image" content="https://i.loli.net/2021/01/11/cYnqBFVh3AjMpwe.png">
 <meta property="og:image" content="https://i.loli.net/2021/01/11/OoxY1rPVXpivcWJ.png">
 <meta property="og:image" content="https://i.loli.net/2021/01/11/Wvl1b2oE8qQj3e5.png">
-<meta property="article:published_time" content="2021-01-13T01:36:13.075Z">
-<meta property="article:modified_time" content="2021-01-13T01:36:13.075Z">
+<meta property="article:published_time" content="2021-01-13T01:56:33.512Z">
+<meta property="article:modified_time" content="2021-01-13T01:56:33.512Z">
 <meta property="article:author" content="W P">
+<meta property="article:tag" content="--红帽 --LINUX8">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.loli.net/2021/01/11/I9NDjVFKM7lWQ1s.png">
   
@@ -177,7 +178,7 @@
 	
         
         <a href="/2021/01/13/%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/" class="archive-article-date">
-  	<time datetime="2021-01-13T01:36:13.075Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
+  	<time datetime="2021-01-13T01:56:33.512Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
 </a>
 
 
@@ -188,6 +189,7 @@
       
         <p>1：要记录用户；2：记录用户在几点几分做了什么操作</p>
 <h4 id="1，概念"><a href="#1，概念" class="headerlink" title="1，概念"></a>1，概念</h4><p>日志通过什么协议记录的呢？ syslog<br>需要其他服务来进行日志整理<br><strong>Syslog</strong>:一个协议一个标准<br><strong>systemd-journald.service</strong>:记录服务有关,开机引导有关的日志，服务在运行时候才有关的日志<br>保存在以二进制文件的形式保存在内存,如果新系统被重启以后,systemd-journald.service保存的日志就没有了<br><strong>rsyslog.service</strong>:就是要把systemd-journald.service保存的二进制内容：转换成文本文档.并且会保存在/var/log中！</p>
+<a id="more"></a>
 <h4 id="2-日志分类"><a href="#2-日志分类" class="headerlink" title="2.日志分类"></a>2.日志分类</h4><table>
 <thead>
 <tr>
@@ -336,6 +338,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">--红帽 --LINUX8</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -400,18 +413,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/01/13/%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BF%9D%E6%8A%A4SSH/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/01/13/%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87%E5%8D%8F%E8%AE%AE%E5%8A%A0%E6%9E%84/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          配置和保护SSH
+          网络备份介绍
         
       </div>
     </a>
   
   
-    <a href="/2021/01/13/%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">网络管理</div>
+    <a href="/2021/01/13/%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BF%9D%E6%8A%A4SSH/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">SSH</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -575,10 +588,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">--防火墙 --知识</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">--LINUX
 --技术文化</a>
               </li>
@@ -593,7 +602,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">--防火墙 --知识</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">--网络 --ENSP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">---提权</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -606,6 +623,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">--岁月无情，忆珍惜 --作者：板板大人</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">--红帽 --LINUX8</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">--LINUX8.0 --红帽</a>
               </li>
              
               <li class="article-tag-list-item">
