@@ -6,24 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>3A（审计，认证，授权）认证介绍 | 成长之旅</title>
+  <title>日志管理 | 成长之旅</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="AAA（Authentication认证）1234认证的方式包括* 我知道：用户所知道的信息（如：密码，个人识别号（PIN）等）* 我拥有：用户使用的信息（如：命令卡，智能卡，银行卡）* 我具有：用户所具有的生物特征，（如，指纹，声音，视网膜，DNA）">
+  <meta name="description" content="1：要记录用户；2：记录用户在几点几分做了什么操作 1，概念日志通过什么协议记录的呢？ syslog需要其他服务来进行日志整理Syslog:一个协议一个标准systemd-journald.service:记录服务有关,开机引导有关的日志，服务在运行时候才有关的日志保存在以二进制文件的形式保存在内存,如果新系统被重启以后,systemd-journald.service保存的日志就没有了rsysl">
 <meta property="og:type" content="article">
-<meta property="og:title" content="3A（审计，认证，授权）认证介绍">
-<meta property="og:url" content="http://yoursite.com/2020/12/14/AAA/index.html">
+<meta property="og:title" content="日志管理">
+<meta property="og:url" content="http://yoursite.com/2021/01/13/%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/index.html">
 <meta property="og:site_name" content="成长之旅">
-<meta property="og:description" content="AAA（Authentication认证）1234认证的方式包括* 我知道：用户所知道的信息（如：密码，个人识别号（PIN）等）* 我拥有：用户使用的信息（如：命令卡，智能卡，银行卡）* 我具有：用户所具有的生物特征，（如，指纹，声音，视网膜，DNA）">
+<meta property="og:description" content="1：要记录用户；2：记录用户在几点几分做了什么操作 1，概念日志通过什么协议记录的呢？ syslog需要其他服务来进行日志整理Syslog:一个协议一个标准systemd-journald.service:记录服务有关,开机引导有关的日志，服务在运行时候才有关的日志保存在以二进制文件的形式保存在内存,如果新系统被重启以后,systemd-journald.service保存的日志就没有了rsysl">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://i.loli.net/2020/11/23/t1NLsqX6kTBHp2b.png">
-<meta property="og:image" content="https://i.loli.net/2020/11/23/HLQqYSzG1iahv5J.png">
-<meta property="og:image" content="https://i.loli.net/2020/11/23/tuhfZ7YNIKjR24M.png">
-<meta property="article:published_time" content="2020-12-14T08:20:52.972Z">
-<meta property="article:modified_time" content="2020-12-14T08:20:52.972Z">
+<meta property="og:image" content="https://i.loli.net/2021/01/11/I9NDjVFKM7lWQ1s.png">
+<meta property="og:image" content="https://i.loli.net/2021/01/11/AlBR8eL7wM6hOYH.png">
+<meta property="og:image" content="https://i.loli.net/2021/01/11/cYnqBFVh3AjMpwe.png">
+<meta property="og:image" content="https://i.loli.net/2021/01/11/OoxY1rPVXpivcWJ.png">
+<meta property="og:image" content="https://i.loli.net/2021/01/11/Wvl1b2oE8qQj3e5.png">
+<meta property="article:published_time" content="2021-01-13T01:36:13.075Z">
+<meta property="article:modified_time" content="2021-01-13T01:36:13.075Z">
 <meta property="article:author" content="W P">
-<meta property="article:tag" content="--AAA --知识">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2020/11/23/t1NLsqX6kTBHp2b.png">
+<meta name="twitter:image" content="https://i.loli.net/2021/01/11/I9NDjVFKM7lWQ1s.png">
   
     <link rel="alternative" href="/atom.xml" title="成长之旅" type="application/atom+xml">
   
@@ -158,14 +159,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-AAA" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-日志管理" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      3A（审计，认证，授权）认证介绍
+      日志管理
     </h1>
   
 
@@ -175,8 +176,8 @@
 		</span>
 	
         
-        <a href="/2020/12/14/AAA/" class="archive-article-date">
-  	<time datetime="2020-12-14T08:20:52.972Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-14</time>
+        <a href="/2021/01/13/%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/" class="archive-article-date">
+  	<time datetime="2021-01-13T01:36:13.075Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
 </a>
 
 
@@ -185,23 +186,123 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="AAA"><a href="#AAA" class="headerlink" title="AAA"></a>AAA</h4><h6 id="（Authentication认证）"><a href="#（Authentication认证）" class="headerlink" title="（Authentication认证）"></a>（Authentication认证）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">认证的方式包括</span><br><span class="line">* 我知道：用户所知道的信息（如：密码，个人识别号（PIN）等）</span><br><span class="line">* 我拥有：用户使用的信息（如：命令卡，智能卡，银行卡）</span><br><span class="line">* 我具有：用户所具有的生物特征，（如，指纹，声音，视网膜，DNA）</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<h6 id="Authorization-授权"><a href="#Authorization-授权" class="headerlink" title="Authorization(授权)"></a>Authorization(授权)</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* 用户能访问的资源</span><br><span class="line">* 用户能使用的命令</span><br></pre></td></tr></table></figure>
-<h6 id="Accounting（审计）"><a href="#Accounting（审计）" class="headerlink" title="Accounting（审计）"></a>Accounting（审计）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* 用户用多少时间</span><br><span class="line">* 用户花了多少钱</span><br><span class="line">* 用户做了哪些操作</span><br></pre></td></tr></table></figure>
-<h3 id="Radius"><a href="#Radius" class="headerlink" title="Radius"></a>Radius</h3><p><img src="https://i.loli.net/2020/11/23/t1NLsqX6kTBHp2b.png" alt="1"><br><img src="https://i.loli.net/2020/11/23/HLQqYSzG1iahv5J.png" alt="2"><br><img src="https://i.loli.net/2020/11/23/tuhfZ7YNIKjR24M.png" alt="3"></p>
-<h3 id="LDAP"><a href="#LDAP" class="headerlink" title="LDAP"></a>LDAP</h3><ul>
-<li>LDAP也是基于C/S架构的，LDAP服务器负责对来自应用服务器的请求进行认证，同时还指定用户登录的应用服务器所允许访问的资源范围等<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">A[用户] --&gt; |1请求服务| B(应用服务器)</span><br><span class="line"> B --&gt; | 2认证请求| C(LDAP服务器)</span><br><span class="line"> C --&gt; |3. 认证结果| B </span><br><span class="line"> B --&gt; | 4.接入|D[授权资源]</span><br></pre></td></tr></table></figure>
-<h3 id="用户管理分类"><a href="#用户管理分类" class="headerlink" title="用户管理分类"></a>用户管理分类</h3><h5 id="上网用户管理"><a href="#上网用户管理" class="headerlink" title="上网用户管理"></a>上网用户管理</h5>内部网络中访问网络资源的主体，如企业总部的内部员工，上网用户可以直接通过NGFW访问网络资源<h5 id="接入用户管理"><a href="#接入用户管理" class="headerlink" title="接入用户管理"></a>接入用户管理</h5>外部网络中访问网络的主体,如企业的分支机构员工和出差员工。接入用户需要先通过SSL VPN、L2TP VPN、IPSec VPN或PPPoe方式接入到NGFW、然后才能访问企业总部的网络资源<h5 id="管理员用户"><a href="#管理员用户" class="headerlink" title="管理员用户"></a>管理员用户</h5>管路员用户;指通过TTelnet、SSH,web、FTP等协议或通过Console接入访问设备并对设备进行配置或操作得当用户<h3 id="组织机构管理"><a href="#组织机构管理" class="headerlink" title="组织机构管理"></a>组织机构管理</h3></li>
-<li>系统吧默认有一个缺省认证或</li>
-<li>每个用户组可以包括多个用户和用户组</li>
-<li>每个用户组是能属于一个父用户组</li>
-<li>每个用户至少属于一个用户组，也可以属于多个用户组<br>用户组织结构中涉及如下三个概念：</li>
-<li>认证域：用户组织结构的容器</li>
-<li>用户组/用户:用户按照树形结构组织，用户隶属于组（部门）。管理员可以根据企业的组织结构来创建部门和用户</li>
-<li>安全组: 横向组织结构的跨部门群组，当需要基于部门以外的维度对用户进行管理可以创建跨部门的安全组</li>
-</ul>
-
+        <p>1：要记录用户；2：记录用户在几点几分做了什么操作</p>
+<h4 id="1，概念"><a href="#1，概念" class="headerlink" title="1，概念"></a>1，概念</h4><p>日志通过什么协议记录的呢？ syslog<br>需要其他服务来进行日志整理<br><strong>Syslog</strong>:一个协议一个标准<br><strong>systemd-journald.service</strong>:记录服务有关,开机引导有关的日志，服务在运行时候才有关的日志<br>保存在以二进制文件的形式保存在内存,如果新系统被重启以后,systemd-journald.service保存的日志就没有了<br><strong>rsyslog.service</strong>:就是要把systemd-journald.service保存的二进制内容：转换成文本文档.并且会保存在/var/log中！</p>
+<h4 id="2-日志分类"><a href="#2-日志分类" class="headerlink" title="2.日志分类"></a>2.日志分类</h4><table>
+<thead>
+<tr>
+<th>/var/log/messages</th>
+<th>大多数系统日志消息记录在此处列外包括与身份验证 ,电子邮件处理和调度作业执行相关的消息以及纯粹与调试相关的消息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/var/log/secure</td>
+<td>与安全性和身份验证事件相关syslog消息</td>
+</tr>
+<tr>
+<td>/var/log/maillog</td>
+<td>与邮件服务器相关的syslog消息</td>
+</tr>
+<tr>
+<td>/var/log/cron</td>
+<td>与调度作业执行相关的syslog消息</td>
+</tr>
+<tr>
+<td>/var/log/boot.log</td>
+<td>与系统启动相关的非syslog控制台消息</td>
+</tr>
+<tr>
+<td>/var/log/secure ：一般和登陆有关</td>
+<td></td>
+</tr>
+<tr>
+<td>systemd-journald.service：是没有分类的！</td>
+<td></td>
+</tr>
+<tr>
+<td>/etc/httpd/conf.d/httpd.conf中有格式定a义</td>
+<td></td>
+</tr>
+<tr>
+<td>在你日后使用linux的时候， 你如果要查看日志的，需要知道：</td>
+<td></td>
+</tr>
+<tr>
+<td><img src="https://i.loli.net/2021/01/11/I9NDjVFKM7lWQ1s.png" alt="1"></td>
+<td></td>
+</tr>
+<tr>
+<td><img src="https://i.loli.net/2021/01/11/AlBR8eL7wM6hOYH.png" alt="2"></td>
+<td></td>
+</tr>
+<tr>
+<td>1. 查看的是什么样的日志：比如什么样的服务</td>
+<td></td>
+</tr>
+<tr>
+<td>2. 查看的是系统有关的的日志或者服务的简略日志：/var/log /——:systemctl status xxx(服务名)</td>
+<td></td>
+</tr>
+<tr>
+<td>3. 更多的场景下是通过专门的记录日志的方式：ELK</td>
+<td></td>
+</tr>
+<tr>
+<td>###### 问题</td>
+<td></td>
+</tr>
+<tr>
+<td>rsyslog：分门别类的存放，是通过rsyslog的配置文件中定义的。</td>
+<td></td>
+</tr>
+<tr>
+<td>/etc/rsyslog.conf</td>
+<td></td>
+</tr>
+<tr>
+<td>###### 日志轮替</td>
+<td></td>
+</tr>
+<tr>
+<td><img src="https://i.loli.net/2021/01/11/cYnqBFVh3AjMpwe.png" alt="3"></td>
+<td></td>
+</tr>
+<tr>
+<td><img src="https://i.loli.net/2021/01/11/OoxY1rPVXpivcWJ.png" alt="4"></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>查找system,journnal</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# find &#x2F; -name system.journal</span><br><span class="line">&#x2F;run&#x2F;log&#x2F;journal&#x2F;d64a1f3e03004f7baa365fbee8bb5ec7&#x2F;system.journal</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>查看内存日志：journalctl</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 d64a1f3e03004f7baa365fbee8bb5ec7]# journalctl --since 21:52 --until 22:50</span><br><span class="line">-n:后面第几行</span><br><span class="line">-X:错误日志</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td>[root@RHEL1 d64a1f3e03004f7baa365fbee8bb5ec7]# vim /etc/systemd/journald.conf</td>
+<td></td>
+</tr>
+<tr>
+<td><img src="https://i.loli.net/2021/01/11/Wvl1b2oE8qQj3e5.png" alt="5"></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>systemctl restart systemd-journald//重启服务</p>
+<h4 id="时间与时区"><a href="#时间与时区" class="headerlink" title="时间与时区"></a>时间与时区</h4><p>*<em>timedatectl //查看时间<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> [root@RHEL1 ~]# timedatectl</span><br><span class="line">               Local time: Sun 2021-01-10 22:27:15 EST</span><br><span class="line">           Universal time: Mon 2021-01-11 03:27:15 UTC</span><br><span class="line">                 RTC time: Mon 2021-01-11 03:27:15</span><br><span class="line">                Time zone: America&#x2F;New_York (EST, -0500)</span><br><span class="line">System clock synchronized: yes</span><br><span class="line">              NTP service: active</span><br><span class="line">          RTC in local TZ: no</span><br></pre></td></tr></table></figure><br>*</em> 设置时区:timedatectl set-timezone  “ “<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# timedatectl set-timezone &quot;Asia&#x2F;Shanghai&quot;</span><br><span class="line">[root@RHEL1 ~]# timedatectl</span><br><span class="line">               Local time: Mon 2021-01-11 11:30:15 CST</span><br><span class="line">           Universal time: Mon 2021-01-11 03:30:15 UTC</span><br><span class="line">                 RTC time: Mon 2021-01-11 03:30:15</span><br><span class="line">                Time zone: Asia&#x2F;Shanghai (CST, +0800)</span><br><span class="line">System clock synchronized: yes</span><br><span class="line">              NTP service: active</span><br><span class="line">          RTC in local TZ: no</span><br></pre></td></tr></table></figure></p>
+<h5 id="配置chrony-NTP-服务"><a href="#配置chrony-NTP-服务" class="headerlink" title="配置chrony (NTP)服务"></a>配置chrony (NTP)服务</h5><h6 id="PS：NTP默认时开启的如果想手动设置必须关闭自动服"><a href="#PS：NTP默认时开启的如果想手动设置必须关闭自动服" class="headerlink" title="PS：NTP默认时开启的如果想手动设置必须关闭自动服"></a>PS：NTP默认时开启的如果想手动设置必须关闭自动服</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# timedatectl set-ntp  false &#x2F;&#x2F;关闭NTP同步</span><br><span class="line">[root@RHEL1 ~]# timedatectl set-ntp  true &#x2F;&#x2F;开启NTP同步</span><br></pre></td></tr></table></figure>
+<p><strong>如何配置NTP同步（8.0以前：net.conf）<br>/etc/chrony.conf //NTP配置文件</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Please consider joining the pool (http:&#x2F;&#x2F;www.pool.ntp.org&#x2F;join.html).</span><br><span class="line">pool 2.rhel.pool.ntp.org iburst</span><br><span class="line">pool  NTP服务器name iburst &#x2F;&#x2F;添自动同步功能</span><br><span class="line">[root@RHEL1 ~]# systemctl restart chronyd.service &#x2F;&#x2F;重启服务</span><br></pre></td></tr></table></figure>
+<p><strong>查看时间同步源</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# chronyc sources -v &#x2F;&#x2F;查看时间同步源</span><br></pre></td></tr></table></figure>
       
 
       
@@ -235,17 +336,6 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">--AAA --知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
@@ -296,7 +386,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/12/14/AAA/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2021/01/13/%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -310,18 +400,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/12/14/ENSP%E8%BF%9B%E5%85%A5%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5%E8%A7%86%E5%9B%BE/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/01/13/%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BF%9D%E6%8A%A4SSH/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          华为防火墙
+          配置和保护SSH
         
       </div>
     </a>
   
   
-    <a href="/2020/12/14/VRF%E6%84%9F%E7%9F%A5%E5%9E%8B%E9%98%B2%E7%81%AB%E5%A2%99/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">VRF基础介绍</div>
+    <a href="/2021/01/13/%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">网络管理</div>
       <i class="icon-circle-right"></i>
     </a>
   

@@ -6,24 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>3A（审计，认证，授权）认证介绍 | 成长之旅</title>
+  <title>配置和保护SSH | 成长之旅</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="AAA（Authentication认证）1234认证的方式包括* 我知道：用户所知道的信息（如：密码，个人识别号（PIN）等）* 我拥有：用户使用的信息（如：命令卡，智能卡，银行卡）* 我具有：用户所具有的生物特征，（如，指纹，声音，视网膜，DNA）">
+  <meta name="description" content="123 私钥密钥保存路径&#x2F;root&#x2F;.ssh&#x2F;known_hosts（linux）C:\sers\Administrator\Documents\Netsarang\computer\6\secsh\hoskeys\*.pub(Windows) 利用SSH临时执行命令1ssh -X root@192.168.196.131 hostname 查看谁链接过来：wlo或w">
 <meta property="og:type" content="article">
-<meta property="og:title" content="3A（审计，认证，授权）认证介绍">
-<meta property="og:url" content="http://yoursite.com/2020/12/14/AAA/index.html">
+<meta property="og:title" content="配置和保护SSH">
+<meta property="og:url" content="http://yoursite.com/2021/01/13/%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BF%9D%E6%8A%A4SSH/index.html">
 <meta property="og:site_name" content="成长之旅">
-<meta property="og:description" content="AAA（Authentication认证）1234认证的方式包括* 我知道：用户所知道的信息（如：密码，个人识别号（PIN）等）* 我拥有：用户使用的信息（如：命令卡，智能卡，银行卡）* 我具有：用户所具有的生物特征，（如，指纹，声音，视网膜，DNA）">
+<meta property="og:description" content="123 私钥密钥保存路径&#x2F;root&#x2F;.ssh&#x2F;known_hosts（linux）C:\sers\Administrator\Documents\Netsarang\computer\6\secsh\hoskeys\*.pub(Windows) 利用SSH临时执行命令1ssh -X root@192.168.196.131 hostname 查看谁链接过来：wlo或w">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://i.loli.net/2020/11/23/t1NLsqX6kTBHp2b.png">
-<meta property="og:image" content="https://i.loli.net/2020/11/23/HLQqYSzG1iahv5J.png">
-<meta property="og:image" content="https://i.loli.net/2020/11/23/tuhfZ7YNIKjR24M.png">
-<meta property="article:published_time" content="2020-12-14T08:20:52.972Z">
-<meta property="article:modified_time" content="2020-12-14T08:20:52.972Z">
+<meta property="article:published_time" content="2021-01-13T01:36:51.687Z">
+<meta property="article:modified_time" content="2021-01-13T01:36:51.687Z">
 <meta property="article:author" content="W P">
-<meta property="article:tag" content="--AAA --知识">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2020/11/23/t1NLsqX6kTBHp2b.png">
   
     <link rel="alternative" href="/atom.xml" title="成长之旅" type="application/atom+xml">
   
@@ -158,14 +153,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-AAA" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-配置和保护SSH" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      3A（审计，认证，授权）认证介绍
+      配置和保护SSH
     </h1>
   
 
@@ -175,8 +170,8 @@
 		</span>
 	
         
-        <a href="/2020/12/14/AAA/" class="archive-article-date">
-  	<time datetime="2020-12-14T08:20:52.972Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-14</time>
+        <a href="/2021/01/13/%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BF%9D%E6%8A%A4SSH/" class="archive-article-date">
+  	<time datetime="2021-01-13T01:36:51.687Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
 </a>
 
 
@@ -185,23 +180,20 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="AAA"><a href="#AAA" class="headerlink" title="AAA"></a>AAA</h4><h6 id="（Authentication认证）"><a href="#（Authentication认证）" class="headerlink" title="（Authentication认证）"></a>（Authentication认证）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">认证的方式包括</span><br><span class="line">* 我知道：用户所知道的信息（如：密码，个人识别号（PIN）等）</span><br><span class="line">* 我拥有：用户使用的信息（如：命令卡，智能卡，银行卡）</span><br><span class="line">* 我具有：用户所具有的生物特征，（如，指纹，声音，视网膜，DNA）</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<h6 id="Authorization-授权"><a href="#Authorization-授权" class="headerlink" title="Authorization(授权)"></a>Authorization(授权)</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* 用户能访问的资源</span><br><span class="line">* 用户能使用的命令</span><br></pre></td></tr></table></figure>
-<h6 id="Accounting（审计）"><a href="#Accounting（审计）" class="headerlink" title="Accounting（审计）"></a>Accounting（审计）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* 用户用多少时间</span><br><span class="line">* 用户花了多少钱</span><br><span class="line">* 用户做了哪些操作</span><br></pre></td></tr></table></figure>
-<h3 id="Radius"><a href="#Radius" class="headerlink" title="Radius"></a>Radius</h3><p><img src="https://i.loli.net/2020/11/23/t1NLsqX6kTBHp2b.png" alt="1"><br><img src="https://i.loli.net/2020/11/23/HLQqYSzG1iahv5J.png" alt="2"><br><img src="https://i.loli.net/2020/11/23/tuhfZ7YNIKjR24M.png" alt="3"></p>
-<h3 id="LDAP"><a href="#LDAP" class="headerlink" title="LDAP"></a>LDAP</h3><ul>
-<li>LDAP也是基于C/S架构的，LDAP服务器负责对来自应用服务器的请求进行认证，同时还指定用户登录的应用服务器所允许访问的资源范围等<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">A[用户] --&gt; |1请求服务| B(应用服务器)</span><br><span class="line"> B --&gt; | 2认证请求| C(LDAP服务器)</span><br><span class="line"> C --&gt; |3. 认证结果| B </span><br><span class="line"> B --&gt; | 4.接入|D[授权资源]</span><br></pre></td></tr></table></figure>
-<h3 id="用户管理分类"><a href="#用户管理分类" class="headerlink" title="用户管理分类"></a>用户管理分类</h3><h5 id="上网用户管理"><a href="#上网用户管理" class="headerlink" title="上网用户管理"></a>上网用户管理</h5>内部网络中访问网络资源的主体，如企业总部的内部员工，上网用户可以直接通过NGFW访问网络资源<h5 id="接入用户管理"><a href="#接入用户管理" class="headerlink" title="接入用户管理"></a>接入用户管理</h5>外部网络中访问网络的主体,如企业的分支机构员工和出差员工。接入用户需要先通过SSL VPN、L2TP VPN、IPSec VPN或PPPoe方式接入到NGFW、然后才能访问企业总部的网络资源<h5 id="管理员用户"><a href="#管理员用户" class="headerlink" title="管理员用户"></a>管理员用户</h5>管路员用户;指通过TTelnet、SSH,web、FTP等协议或通过Console接入访问设备并对设备进行配置或操作得当用户<h3 id="组织机构管理"><a href="#组织机构管理" class="headerlink" title="组织机构管理"></a>组织机构管理</h3></li>
-<li>系统吧默认有一个缺省认证或</li>
-<li>每个用户组可以包括多个用户和用户组</li>
-<li>每个用户组是能属于一个父用户组</li>
-<li>每个用户至少属于一个用户组，也可以属于多个用户组<br>用户组织结构中涉及如下三个概念：</li>
-<li>认证域：用户组织结构的容器</li>
-<li>用户组/用户:用户按照树形结构组织，用户隶属于组（部门）。管理员可以根据企业的组织结构来创建部门和用户</li>
-<li>安全组: 横向组织结构的跨部门群组，当需要基于部门以外的维度对用户进行管理可以创建跨部门的安全组</li>
-</ul>
-
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> 私钥密钥保存路径</span><br><span class="line">&#x2F;root&#x2F;.ssh&#x2F;known_hosts（linux）</span><br><span class="line">C:\sers\Administrator\Documents\Netsarang\computer\6\secsh\hoskeys\*.pub(Windows)</span><br></pre></td></tr></table></figure>
+<h6 id="利用SSH临时执行命令"><a href="#利用SSH临时执行命令" class="headerlink" title="利用SSH临时执行命令"></a>利用SSH临时执行命令</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -X root@192.168.196.131 hostname</span><br></pre></td></tr></table></figure>
+<h6 id="查看谁链接过来：wlo或w"><a href="#查看谁链接过来：wlo或w" class="headerlink" title="查看谁链接过来：wlo或w"></a>查看谁链接过来：wlo或w</h6><p>公钥保存位置： ~/.ssh/known_hosts</p>
+<h6 id="创建密钥对方法"><a href="#创建密钥对方法" class="headerlink" title="创建密钥对方法"></a>创建密钥对方法</h6><p>ssh-keygen生成密钥对</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# ssh-keygen </span><br><span class="line">Generating public&#x2F;private rsa key pair.Enter file in which to save the key (&#x2F;root&#x2F;.ssh&#x2F;id_rsa): </span><br><span class="line">Created directory &#39;&#x2F;root&#x2F;.ssh&#39;.</span><br><span class="line">Enter passphrase (empty for no passphrase): </span><br><span class="line">Enter same passphrase again: </span><br><span class="line">Your identification has been saved in &#x2F;root&#x2F;.ssh&#x2F;id_rsa.</span><br><span class="line">Your public key has been saved in &#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:vRCPNtlq5gtFSUzU29aX1bA3CZEpwwQGELG+67NSuTU root@RHEL1.PCY.COM</span><br><span class="line">The key&#39;s randomart image is:</span><br><span class="line">+---[RSA 2048]----+</span><br><span class="line">|     ++&#x3D;&#x3D;++. o&#x3D;..|</span><br><span class="line">|      ..o..+ o..+|</span><br><span class="line">|     .  +  oo..o+|</span><br><span class="line">|    .  . B. o .oo|</span><br><span class="line">|     .. S +.   . |</span><br><span class="line">|     o.E + .     |</span><br><span class="line">|    ..+ &#x3D; .      |</span><br><span class="line">|   . o.&#x3D;         |</span><br><span class="line">|    o+o o.       |</span><br><span class="line">+----[SHA256]-----+</span><br></pre></td></tr></table></figure>
+<h6 id="复制指定公钥到需要连接的对端服务器"><a href="#复制指定公钥到需要连接的对端服务器" class="headerlink" title="复制指定公钥到需要连接的对端服务器"></a>复制指定公钥到需要连接的对端服务器</h6><p>ssh-copy-id <a href="mailto:root@192.168.196.131">root@192.168.196.131</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# ssh-copy-id root@192.168.196.131</span><br><span class="line">&#x2F;usr&#x2F;bin&#x2F;ssh-copy-id: INFO: Source of key(s) to be installed: &quot;&#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub&quot;</span><br><span class="line">The authenticity of host &#39;192.168.196.131 (192.168.196.131)&#39; can&#39;t be established.</span><br><span class="line">ECDSA key fingerprint is SHA256:EGZtbzQwMt7akqucTfg6AhtcRZT1WEALlMGC8qFYRwQ.</span><br><span class="line">Are you sure you want to continue connecting (yes&#x2F;no)?</span><br></pre></td></tr></table></figure>
+<h6 id="SSH连接，指定私钥即可"><a href="#SSH连接，指定私钥即可" class="headerlink" title="SSH连接，指定私钥即可"></a>SSH连接，指定私钥即可</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -X root@IP地址</span><br></pre></td></tr></table></figure>
+<h6 id="自定公SSH公私钥连接"><a href="#自定公SSH公私钥连接" class="headerlink" title="自定公SSH公私钥连接"></a>自定公SSH公私钥连接</h6><p>ssh-keygen -n</p>
+<h6 id="SSHD配置——-禁止root用户登录"><a href="#SSHD配置——-禁止root用户登录" class="headerlink" title="SSHD配置——- 禁止root用户登录"></a>SSHD配置——- 禁止root用户登录</h6><p>vim /etc/ssh/sshd_config<br>修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#LoginGraceTime 2m</span><br><span class="line">PermitRootLogin yes----改成no</span><br></pre></td></tr></table></figure>
+<p>systemctl restart sshd 重启这个服务</p>
+<h6 id="修改SSH端口"><a href="#修改SSH端口" class="headerlink" title="修改SSH端口"></a>修改SSH端口</h6><p>vim /etc/ssh/sshd_config</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line">#Port 22-------&gt;去掉# 改成其他可用端口</span><br><span class="line">#AddressFamily any</span><br></pre></td></tr></table></figure>
       
 
       
@@ -235,17 +227,6 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">--AAA --知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
@@ -296,7 +277,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/12/14/AAA/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2021/01/13/%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BF%9D%E6%8A%A4SSH/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -310,18 +291,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/12/14/ENSP%E8%BF%9B%E5%85%A5%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5%E8%A7%86%E5%9B%BE/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/01/13/%E8%BF%9B%E7%A8%8B/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          华为防火墙
+          进程
         
       </div>
     </a>
   
   
-    <a href="/2020/12/14/VRF%E6%84%9F%E7%9F%A5%E5%9E%8B%E9%98%B2%E7%81%AB%E5%A2%99/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">VRF基础介绍</div>
+    <a href="/2021/01/13/%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">日志管理</div>
       <i class="icon-circle-right"></i>
     </a>
   

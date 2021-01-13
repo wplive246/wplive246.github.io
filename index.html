@@ -62,7 +62,7 @@
 			</ul>
 		</nav>
 		<nav>
-			<a>总文章数10</a>
+			<a>总文章数17</a>
 		</nav>
 		<nav class="header-smart-menu">
     		
@@ -151,6 +151,960 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-visudo普通用户提权" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/13/visudo%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E6%8F%90%E6%9D%83/">visudo普通用户提权</a>
+    </h1>
+  
+
+	
+        
+        <a href="/2021/01/13/visudo%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E6%8F%90%E6%9D%83/" class="archive-article-date">
+  	<time datetime="2021-01-13T01:41:44.220Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
+</a>
+
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="visudo普通用户提权"><a href="#visudo普通用户提权" class="headerlink" title="visudo普通用户提权"></a>visudo普通用户提权</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[pcy@RHEL1 etc]$ fdisk -l &#x2F;dev&#x2F;nvme0n1</span><br><span class="line">fdisk: cannot open &#x2F;dev&#x2F;nvme0n1: Permission denied</span><br><span class="line">[pcy@RHEL1 etc]$</span><br></pre></td></tr></table></figure>
+<p>sudo :用户普通权限用户的提升<br>如何解决：提升普通用户的权限，让他能够去执行某些root权限，而不是全部，让一个用户具备root权限。<br>通过sudo来给普通用户具备root用户的某些权限 。<br>通常做法：修改速递的配置文件/etc/sudoers ,但不通过vim去编辑这个文件， 都是通过visudo去编辑/etc/sudoers 因为visudo具备语法检测功能（因为文件只有读）</p>
+<h4 id="权限格式"><a href="#权限格式" class="headerlink" title="权限格式"></a>权限格式</h4><p>用户名（提升谁的的权限） ALL=（ALL） ALL 指的就是权限<br>你要把权限给囊用户<br>ALL=（ALL）从那个主机上登陆<br>权限——–指的是操作（用绝对路径）<br>例子：让test1用户有权限执行fdisk 进行磁盘分区</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## Allows people in group wheel to run all commands</span><br><span class="line">%wheel  ALL&#x3D;(ALL)       ALL</span><br><span class="line">test1   ALL&#x3D;(ALL)       &#x2F;usr&#x2F;sbin&#x2F;fdisk</span><br></pre></td></tr></table></figure>
+<p>验证（需要输入用户密码）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[test1@RHEL1 ~]$ sudo fdisk  -l  &#x2F;dev&#x2F;nvme0n1 </span><br><span class="line"></span><br><span class="line">We trust you have received the usual lecture from the local System</span><br><span class="line">Administrator. It usually boils down to these three things:</span><br><span class="line"></span><br><span class="line">    #1) Respect the privacy of others.</span><br><span class="line">    #2) Think before you type.</span><br><span class="line">    #3) With great power comes great responsibility.</span><br></pre></td></tr></table></figure>
+<p>在配置文件中 ，你可以指定不需要输入密码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## Same thing without a password</span><br><span class="line"># %wheel        ALL&#x3D;(ALL)       NOPASSWD: ALL</span><br><span class="line">test1   ALL&#x3D;(ALL)       NOPASSWD:&#x2F;usr&#x2F;sbin&#x2F;fdisk</span><br></pre></td></tr></table></figure>
+<p>验证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[test1@RHEL1 ~]$ sudo fdisk -l  &#x2F;dev&#x2F;nvme0n1</span><br><span class="line">Disk &#x2F;dev&#x2F;nvme0n1: 20 GiB, 21474836480 bytes, 41943040 sectors</span><br><span class="line">Units: sectors of 1 * 512 &#x3D; 512 bytes</span><br><span class="line">Sector size (logical&#x2F;physical): 512 bytes &#x2F; 512 bytes</span><br><span class="line">I&#x2F;O size (minimum&#x2F;optimal): 512 bytes &#x2F; 512 bytes</span><br><span class="line">Disklabel type: dos</span><br><span class="line">Disk identifier: 0xf2321164</span><br><span class="line"></span><br><span class="line">Device         Boot   Start      End  Sectors Size Id Type</span><br><span class="line">&#x2F;dev&#x2F;nvme0n1p1 *       2048  2099199  2097152   1G 83 Linux</span><br><span class="line">&#x2F;dev&#x2F;nvme0n1p2      2099200 41943039 39843840  19G 8e Linux LVM</span><br></pre></td></tr></table></figure>
+<hr>
+<p>查找一个可执行性文件的路径： which fdisk</p>
+<hr>
+<p>除了使用用户名以外还以使用组名(%)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## Allows people in group wheel to run all commands</span><br><span class="line">%test1  ALL&#x3D;(ALL)       NOPASSWD :  &#x2F;usr&#x2F;sbin&#x2F;fdisk</span><br></pre></td></tr></table></figure>
+<p>也可以使用用户的别名 （别名必须大写，在调用的时候别名不需要加%）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">User_Alias PCY&#x3D;test1</span><br><span class="line">PCY     ALL&#x3D;(ALL)       NOPASSWD: &#x2F;usr&#x2F;sbin&#x2F;fdisk</span><br></pre></td></tr></table></figure>
+<p>也可以使用命令的别名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Cmnd_Alias COMMAND1&#x3D;&#x2F;usr&#x2F;sbin&#x2F;fdisk , &#x2F;bin&#x2F;passwd</span><br><span class="line">PCY     ALL&#x3D;(ALL)   NOPASSWD: COMMAND1</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/13/visudo%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E6%8F%90%E6%9D%83/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+<section id="comments" class="comments">
+  <style>
+    .comments{margin:30px;padding:10px;background:#fff}
+    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+  </style>
+  <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '.comment',
+            notify: notify,
+            verify: verify,
+            app_id: "oUkB3jHpUeq2naBH6VNtAzui-gzGzoHsz",
+            app_key: "YQiUhUmLBneTQKg4kgSG2zK4",
+            placeholder: "欢迎留言",
+            avatar:""
+        });
+    }
+</script>
+
+  </section>
+
+
+  
+    <article id="post-用户和组" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/13/%E7%94%A8%E6%88%B7%E5%92%8C%E7%BB%84/">用户和组</a>
+    </h1>
+  
+
+	
+        
+        <a href="/2021/01/13/%E7%94%A8%E6%88%B7%E5%92%8C%E7%BB%84/" class="archive-article-date">
+  	<time datetime="2021-01-13T01:40:17.644Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
+</a>
+
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="用户分类"><a href="#用户分类" class="headerlink" title="用户分类"></a>用户分类</h5><ul>
+<li>超级管理员（root）-UID=0</li>
+<li>系统用户（系统服务类的用户）<ul>
+<li>系统调用</li>
+<li>已部署安装的服务（比如MySQL）</li>
+</ul>
+</li>
+<li>普通用户 UID&gt;1000 student<br>ps：在实际生产环境中，系统管理员一般使普通用户去管理<br>UID：user identificartion（用户的唯一身份标识）<h5 id="组"><a href="#组" class="headerlink" title="组"></a>组</h5></li>
+</ul>
+<ol>
+<li>特点：一个组当中可以包含多个用户,一个用户也可以属于多个组</li>
+<li>初始组（主要组）和附加组GID</li>
+<li>用户账户信息<h5 id="4-用户账户信息：系统本地用户信息存放在-etc-passwd中"><a href="#4-用户账户信息：系统本地用户信息存放在-etc-passwd中" class="headerlink" title="4. 用户账户信息：系统本地用户信息存放在/etc/passwd中"></a>4. 用户账户信息：系统本地用户信息存放在/etc/passwd中</h5><h6 id="文件特点"><a href="#文件特点" class="headerlink" title="文件特点"></a>文件特点</h6>root:x:0:0:root:/root:/bin/bash<br>bin:x:1:1:bin:/bin:/sbin/nologin<br>(1)每个用户占用一行，以：分隔为7个字段<br>（2）每个字段的作用<br>字段1（root）— 用户名<br>字段2（x）——用户密码（通常用x代替，密码单独通过SHA512加密存放在/etc/shadow）<br>字段3 （0）——用户的UID<br>字段4（0）—–用户的初始组（主要组）的GID<br>字段5（root）———用户的描述信息<br>字段6（/root）———用户的家目录<br>字段7（/bin/bash）—–用户的Shell类型<br>1&gt;root用户以及普通用户的设立了类型:/bin/bash<br>2&gt;系统用户的shell类型：/sbin/nologin</li>
+</ol>
+<h5 id="5-用户密码信息：存放在-etc-shadow文件中"><a href="#5-用户密码信息：存放在-etc-shadow文件中" class="headerlink" title="5.用户密码信息：存放在/etc/shadow文件中"></a>5.用户密码信息：存放在/etc/shadow文件中</h5><h6 id="文件特点-1"><a href="#文件特点-1" class="headerlink" title="文件特点"></a>文件特点</h6><p>bin:<em>:17784:0:99999:7:::<br>（1）每个用户占用一行，以：分隔9个字段<br>（2）每个字段的作用<br>字段1（bin）——-用户名<br>字段2 （\</em>）——–用户名的密码信息（采用sha512<br>加密），如果改用户的密码没有设置的话，会显示*，如果密码过期前面会加一个！<br>字段3（17784）——最近一次更改密码的日期（从1970年1算起，）<br>字段4（0）———-多少之内你不能更改密码，数字天数，0为无限制<br>字段5（99999）——多少天之后必须更改密码（99999表示无需更改）<br>字段6 (7) —–提前多少天提示改密码<br>字段7（默认为空）——到了改密码的时间后，多少的宽限时间，到了密码吗失效<br>字段8 （默认为空）— 账号失效日<br>字段9 （保留）</p>
+<h5 id="用户组账号信息：-etc-group"><a href="#用户组账号信息：-etc-group" class="headerlink" title="用户组账号信息：/etc/group"></a>用户组账号信息：/etc/group</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root:x:0:</span><br><span class="line">bin:x:1:</span><br><span class="line">总共4个字段，字段作用：</span><br><span class="line">字段1 （sys）------组名</span><br><span class="line">字段2（x）-----组密码（通常在&#x2F;etc&#x2F;gshadow中）</span><br><span class="line">字段3（3）-----GID</span><br><span class="line">字段4（省略）--------组成员（谁以这个组为初始组的用，这个用户挥别省略）</span><br></pre></td></tr></table></figure>
+<h5 id="组密码信息"><a href="#组密码信息" class="headerlink" title="组密码信息"></a>组密码信息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">文件特点</span><br><span class="line">[root@RHEL1 &#x2F;]# head -n 2 &#x2F;etc&#x2F;gshadow</span><br><span class="line">root:::</span><br><span class="line">bin:::</span><br><span class="line">总共4个阶段，字段作用</span><br><span class="line">字段1（1）------组名</span><br><span class="line">字段2（）-------组密码（留空不设置）</span><br><span class="line">字段3（）--------组的管理员（留空不设置）</span><br><span class="line">字段4（省略）------组成员（谁以这个组为初始组的用户。这个用户挥别省略）</span><br></pre></td></tr></table></figure>
+<h5 id="用户信息管理"><a href="#用户信息管理" class="headerlink" title="用户信息管理"></a>用户信息管理</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">查看：id username</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> 切换：su &#x2F;&#x2F;su 和 su- su是带有目录的切换，su- 是不带目录的切换  Tips ：无特殊情况下，请用su-切换用户</span><br><span class="line">&#96;&#96;&#96;</span><br></pre></td></tr></table></figure>
+<p>   创建用户：useradd<br>    1.默认会创建一个和用户名相同的组名，也是它的初始组：除非你特殊指定<br>    2.默认的UID：是已经的存在的最大的ＵＩＤ＋１<br>    3.默认的GID：也是最大+1<br>    4.默认的家目录： ls -l /home/name/ -d<br>    5 普通用户的默认shell 类型：/bin/bash<br>    6.useradd -r 创建的就是系统用户<br>    用法：<br>    useradd -u 2000 -g student -G test1 -s /sbin/nologin -c “RHEL Test user 2 “ -d /home/testuser2 test2<br>    -u UID -g 初始组 -G 附加组 -s shell 类型 -c 注释 -d 家目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#96;&#96;&#96;</span><br><span class="line">    删除用户： userdel</span><br><span class="line">    userdel username -----只删除用户记录</span><br><span class="line">    userdel -r username -------递归删除，连同该用户的家目录一同删除</span><br></pre></td></tr></table></figure>
+<h5 id="组信息管理"><a href="#组信息管理" class="headerlink" title="组信息管理"></a>组信息管理</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">创建组（groupadd）</span><br><span class="line">删除组（groupdel）</span><br><span class="line">把一个用户添加到组（gpasswd -a）</span><br><span class="line">从一个组一个用户（gpasswd -d）</span><br></pre></td></tr></table></figure>
+<h5 id="修改用户信息"><a href="#修改用户信息" class="headerlink" title="修改用户信息"></a>修改用户信息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">usermod:用户信息修改</span><br><span class="line">可修改的内容：初始组，用户ID 描述shell类型等, 其实user add的命令选项可以在usermod中使用</span><br></pre></td></tr></table></figure>
+<h5 id="设置登陆密码"><a href="#设置登陆密码" class="headerlink" title="设置登陆密码"></a>设置登陆密码</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  passwd</span><br><span class="line"> tips:只有root用户才能去修改其他用户的登陆密码，其他普通用户只能用passwd修改自身的登陆密码</span><br><span class="line">普通用户在修改自己登陆密码的时候，必须要提供原始密码，而且复杂度必须要符合要求</span><br></pre></td></tr></table></figure>
+<h5 id="查看密码信息"><a href="#查看密码信息" class="headerlink" title="查看密码信息"></a>查看密码信息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">passwd -S username  &#x2F;&#x2F;查看密码信息</span><br><span class="line">passwd -I usename  &#x2F;&#x2F;锁定密码</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/13/%E7%94%A8%E6%88%B7%E5%92%8C%E7%BB%84/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+<section id="comments" class="comments">
+  <style>
+    .comments{margin:30px;padding:10px;background:#fff}
+    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+  </style>
+  <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '.comment',
+            notify: notify,
+            verify: verify,
+            app_id: "oUkB3jHpUeq2naBH6VNtAzui-gzGzoHsz",
+            app_key: "YQiUhUmLBneTQKg4kgSG2zK4",
+            placeholder: "欢迎留言",
+            avatar:""
+        });
+    }
+</script>
+
+  </section>
+
+
+  
+    <article id="post-文件权限" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/13/%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90/">文件权限</a>
+    </h1>
+  
+
+	
+        
+        <a href="/2021/01/13/%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90/" class="archive-article-date">
+  	<time datetime="2021-01-13T01:39:08.400Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
+</a>
+
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="文件权限"><a href="#文件权限" class="headerlink" title="文件权限"></a>文件权限</h5><p>定以：就是一个用户针对一个目录或者文件具备什么样的操作权限<br>2，几个概念<br>    （1）身份：一个用户针对一个目录或者文件具备什么样的操作权限<br>        身份分类：所有者（拥有者），属组，其他人</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# ls -ld &#x2F;etc&#x2F;fstab </span><br><span class="line">-rw-r--r--. 1 root root 579 Dec  1 12:49 &#x2F;etc&#x2F;fstab</span><br></pre></td></tr></table></figure>
+<p>root用户超级管理员，但root组是一个普通组<br>（2）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# ls -ld &#x2F;etc&#x2F;fstab </span><br><span class="line">-rw-r--r--. 1 root root 579 Dec  1 12:49 &#x2F;etc&#x2F;fstab</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>rwx</th>
+<th>rwx</th>
+<th>rwx</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>所有者</td>
+<td>所属组</td>
+<td>其他人</td>
+</tr>
+<tr>
+<td>test1：对于/etc/fstab这个文件而言，他仅有r（读取）权限，不具备w（写入）和x （执行权限）</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>R:Read可读———-能够读取文件或者目录内容的权限</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>W： write可写———能够修改文件或者目录内容</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>X: 针对文件而言，x加可执行；针对目录而言，x是否能够成为一个用户的工作目录</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>对于目录权限的分析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 tmp]# ls -ld 1</span><br><span class="line">drwxr-xr-x. 2 root root 6 Dec 21 12:29 1</span><br></pre></td></tr></table></figure>
+
+<p>显然： test1对于/tmp/1 这个文件而言，是其他人身份，所以具备的权限是r和x<br>当一个用户针对一个目录具备r权限的时候，是能够查看到该目录下的内容，问题就是目录得到内容什么呢？ 就是一系列文件名以及目录名称。test1针对这个目录而言，能够读取到这个目录下的文件名和目录名</p>
+<p>若目录r权限去掉， 则无法读取这个目录下的文件名和目录名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 tmp]# chmod (ogu)-r ,o-x 1</span><br></pre></td></tr></table></figure>
+<p>只要你想一个用户针对一个目录可访问：具备读取r和执行x权限是必须要的，单纯的r和单纯的w都是没有任何意义的！而针对目录的w（写入）很简单，即是否能在该目录下创建或者删除文件。</p>
+<p>所以，针对目录的权限设置，存在以下3种情况；<br>1&gt;rx<br>2&gt;rwx<br>3&gt;—<br>以下这些情况基本不存在<br>r–: 仅仅能够看到名字<br>-w-: 你都没有办法成为工作目录，所以没有意义<br>–x：<br>rw-：<br>-wx：<br>那么针对文件就不一样。身份问题是相同的<br><strong>r权限</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 tmp]# ls -ld f1</span><br><span class="line">-rw-r--r--. 1 root root 0 Dec 23 06:28 f1</span><br></pre></td></tr></table></figure>
+<p>w权限：只给w权限，如果不能读取文件，没啥意义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 tmp]# ls -ld f1 </span><br><span class="line">-rw-r---w-. 1 root root 0 Dec 23 06:28 f1</span><br></pre></td></tr></table></figure>
+<p>x权限：也就是文件可以拿来执行（类似于windows的exe/bat/com文件），在liunx内，能不能执行，就看他有没有x权限,能不能有正确的输出，也是靠执行权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 tmp]# &#x2F;tmp&#x2F;f1</span><br><span class="line">-bash: &#x2F;tmp&#x2F;f1: Permission denied</span><br></pre></td></tr></table></figure>
+<p>若你想执行文件，你必须看到（能读取内容）。所以必有r权限</p>
+<p>总结：对于文件而言的权限设置<br>r– 可以仅仅读取<br>rw- 可以读取<br>rwx 可读可写可执行<br>—啥都没有<br>r-x可读可执行<br>-w- –x -wx 不存在</p>
+<h5 id="3-权限修改：chmod"><a href="#3-权限修改：chmod" class="headerlink" title="3.权限修改：chmod"></a>3.权限修改：chmod</h5><p>记号法：rwx 数值法：r-&gt;4,w-&gt;2,x-&gt;1<br>u:拥有者 g:所属组 0：其他人<br>=：直接赋予权限<br>+：在原基础上加权限<br>-：在原基础上减权限<br>753：拥有者（r+w+x）=（4+3+1），其他人（wx）=2+1，所属组（rx）=4+1</p>
+<h5 id="4，身份修改：-chown-（改用户）chgrp（改组）"><a href="#4，身份修改：-chown-（改用户）chgrp（改组）" class="headerlink" title="4，身份修改： chown （改用户）chgrp（改组）"></a>4，身份修改： chown （改用户）chgrp（改组）</h5><h5 id="5，默认权限"><a href="#5，默认权限" class="headerlink" title="5，默认权限"></a>5，默认权限</h5><p>为何创建文件夹时权限755，创建文件时权限644？是因为有一个默认属性在起作用，即umask（反掩码）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 test1]# umask</span><br><span class="line">0022</span><br></pre></td></tr></table></figure>
+<p>一个目录的创建权限等于：满权限（777）-umask值<br>777-022=755<br>一个文件的创建权限等于：满权限（666）-umask值<br>666-022=644</p>
+<p>root用户和普通的umask值不一样。（查看/etc/profile文件）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if [ $UID -gt 199 ] &amp;&amp; [ &quot;&#96;id -gn&#96;&quot; &#x3D; &quot;&#96;id -un&#96;&quot; ]; then</span><br><span class="line">    umask 002</span><br><span class="line">else</span><br><span class="line">    umask 022</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>修改umask值<br>临时修改：umask<br>永久修改：vim /etc/pofile,修改后需要source /etc/profile之后永久生效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if [ $UID -gt 199 ] &amp;&amp; [ &quot;&#96;id -gn&#96;&quot; &#x3D; &quot;&#96;id -un&#96;&quot; ]; then</span><br><span class="line">    umask 002  &#x2F;&#x2F;普通用户</span><br><span class="line">else</span><br><span class="line">    umask 022 &#x2F;&#x2F; root用户</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<h5 id="6，特殊权限"><a href="#6，特殊权限" class="headerlink" title="6，特殊权限"></a>6，特殊权限</h5><p>SUID       SGID           Sticky bit<br>(1)SUID<br>普通能不能改自己密码？（能）<br>修改密码，最终是修改那个文件（/etc/shadow）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 test1]# ll &#x2F;etc&#x2F;shadow</span><br><span class="line">----------. 1 root root 1305 Dec 23 06:24 &#x2F;etc&#x2F;shadow</span><br></pre></td></tr></table></figure>
+<p>既然无权限，普通用户test1是怎样把密码写进去的呢？这里要看着普通用户test1修改密码执行的是那个二进制文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 test1]# which passwd</span><br><span class="line">&#x2F;usr&#x2F;bin&#x2F;passwd</span><br><span class="line">[root@RHEL1 test1]# ll &#x2F;usr&#x2F;bin&#x2F;passwd</span><br><span class="line">-rwsr-xr-x. 1 root root 34512 Aug 12  2018 &#x2F;usr&#x2F;bin&#x2F;passwd</span><br></pre></td></tr></table></figure>
+<p>普通文件：rwx 带SUID的文件：rws<br>SUID: 当一个s权限出现在拥有者的x位上<br>作用： 当一个普通用户test1去执行一个带有SUID的二进制文件（passwd），那么这个用户（test1）在执行过程中，会暂时获得获取到这个二进制文件（passwd）的拥有者（root）的权限！后续操作比如修改（passwd)这个文件的时候，会拿着（root）这个拥有者的身份去执行，这个操作仅仅对二进制文件生效<br>原理： 普通用户执行passwd—&gt;/etc/shadow—&gt;root身份去执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 test1]# ps -ef | grep passwd</span><br><span class="line">root       5110   4430  0 10:01 pts&#x2F;1    00:00:00 grep --color&#x3D;auto passwd</span><br></pre></td></tr></table></figure>
+<p>Tips:如果是rw5，则本身文件没执行权限的，仅仅获得了SUID功能而已，SGID同样适用<br><strong>操作方法：shmod u+s fiename</strong><br>(2)SGID<br>SGID:当一个是权限出现在属组的x位上<br>1）针对二进制文件： 文件执行过程中获取文件属组的权限<br>2）针对目录：默认情况下， 我们新建一个文件或目录的时候，它的属组是这个用户的初始组<br>3）加上SGID之后 ， 其下新建的文件会继承该目录的属组<br>4）操作方法：chmod g+s filename /dirname</p>
+<p>sticky bit (粘滞位)<br>sticky bit : 仅对目录生效，若改目录其他人得到执行权限出现 T， 那么该目录下的文件或目录，仅文件所有者及root用户能删除<br>操作方法：chmod o+t dirname</p>
+<p>超级权限数值法：suid 4xxx /sgid 2xxx / sticky bit 1xxx</p>
+<p>（4）写保护特殊权限：i和a<br>操作方法：<br>修改：chattr + i/+a  filename<br>列出：lsattr filename<br>+i :硬写保护，只能读不能写，不能删除<br>+a：软写保护 ，只能度不能写，不能删除原有的内容，但是能通过重定向追加更新内容</p>
+<h5 id="对特定文件设置acl文件权限"><a href="#对特定文件设置acl文件权限" class="headerlink" title="对特定文件设置acl文件权限"></a>对特定文件设置acl文件权限</h5><p>1，查看 getfacl<br>[root@RHEL1 tmp]# getfacl messages<br>\  # file: messages<br>\  # owner: root<br>\  # group: root<br>user::rw-<br>group::—<br>other::—</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/13/%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+<section id="comments" class="comments">
+  <style>
+    .comments{margin:30px;padding:10px;background:#fff}
+    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+  </style>
+  <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '.comment',
+            notify: notify,
+            verify: verify,
+            app_id: "oUkB3jHpUeq2naBH6VNtAzui-gzGzoHsz",
+            app_key: "YQiUhUmLBneTQKg4kgSG2zK4",
+            placeholder: "欢迎留言",
+            avatar:""
+        });
+    }
+</script>
+
+  </section>
+
+
+  
+    <article id="post-进程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/13/%E8%BF%9B%E7%A8%8B/">进程</a>
+    </h1>
+  
+
+	
+        
+        <a href="/2021/01/13/%E8%BF%9B%E7%A8%8B/" class="archive-article-date">
+  	<time datetime="2021-01-13T01:37:37.847Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
+</a>
+
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h6 id="触发进程的方式有两种"><a href="#触发进程的方式有两种" class="headerlink" title="触发进程的方式有两种"></a>触发进程的方式有两种</h6><p>（1） 执行一个可执行的二进制文件（一般是系统命令或者脚本）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;usr&#x2F;passwd </span><br><span class="line">ps -ef | grep passwd</span><br></pre></td></tr></table></figure>
+<h6 id="分析进程的拥有者"><a href="#分析进程的拥有者" class="headerlink" title="分析进程的拥有者"></a>分析进程的拥有者</h6><p>直接执行的时候，大部分情况下（系统没命了，脚本程序），这种是谁触发（通常是拥有者）就是谁的</p>
+<h4 id="资源查看"><a href="#资源查看" class="headerlink" title="资源查看"></a>资源查看</h4><p>1&gt; 通过特定的监控平台或者软件来监控进程：<br>zabbix ngaios Prometheus<br>2&gt; 通过系统命令来查看资源<br>ps pstree top<br>3&gt; 通过脚本程序利用系统命令生成图表</p>
+<h6 id="ps命令"><a href="#ps命令" class="headerlink" title="ps命令"></a>ps命令</h6><p> 当ps不带任何参数的时候，查看事当前终端的所有进程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# ps</span><br><span class="line">   PID TTY          TIME CMD</span><br><span class="line">  4232 pts&#x2F;0    00:00:00 bash</span><br><span class="line">  4808 pts&#x2F;0    00:00:00 ps</span><br></pre></td></tr></table></figure>
+<p>PID:2022每一个进程都有一个唯一的ID值，这个就叫PID<br>TTY :pts/0 这个是动态终端，是在哪个终端上触发的进程，如果一个进程是依赖于某个pts，那么这个pts结束,该pts上的所有进程都会结束<br>TTY：？ 就是与终端无关的进程，即后台服务，意味着他不依赖于终端。<br>TIME:进程从触发开始执行的时间<br>CMD:一个进程一定是起源的，而这个起源是通过触发那个可执行文件得到的，可以用which</p>
+<h6 id="ps-lf-就能查看比较详细的信息"><a href="#ps-lf-就能查看比较详细的信息" class="headerlink" title="ps -lf 就能查看比较详细的信息:"></a>ps -lf 就能查看比较详细的信息:</h6><p>首先关注linux的进程状态（S:state）<br><img src="https://i.loli.net/2021/01/06/GTzx2ulIhbRQUrv.png" alt="1"><br><img src="https://i.loli.net/2021/01/06/Tsh5CbDPHA7OGN6.png" alt="2"><br> ps -aux(常用)</p>
+<h6 id="pstree：查看进程之间的关联关系"><a href="#pstree：查看进程之间的关联关系" class="headerlink" title="pstree：查看进程之间的关联关系"></a>pstree：查看进程之间的关联关系</h6><p>通常用法：pstree -Aup</p>
+<h6 id="top：动态查看系统资源"><a href="#top：动态查看系统资源" class="headerlink" title="top：动态查看系统资源"></a>top：动态查看系统资源</h6><p>命令通常用法：top  -d 1 -n 1<br>-d :间隔时间（秒）<br>-n:刷新次数</p>
+<h4 id="作业控制"><a href="#作业控制" class="headerlink" title="作业控制"></a>作业控制</h4><p>在一个终端的前端，仅仅只能存在1个进程！同时运行多个任务怎么办<br>前端:前端运行一个交互式进车任务<br>后端：不需要交互的进程任务<br>怎样才能把一个任务丢到后端？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[pcy@RHEL1 ~]$ ping www.baidu.com &gt;&gt; &#x2F;dev&#x2F;null &amp;</span><br><span class="line">[3] 7044</span><br></pre></td></tr></table></figure>
+<p>查看后端进程：jobs<br>命令后面加&amp;就是把一个任务丢到后端去运行<br>后端任务拉回前端：fg num (任务编号)<br>停止任务： CTRL+Z<br>把前端任务放在后端：bg num (任务编号)<br>&amp; ctrl+Z fg num bg num<br>note:这些跟终端有关的进程，不管前端还是后端也好， 终端一结束，所有的都会停止<br>与终端无关的后台任务，哪怕你的终端已经被关闭，没有关系。用nohup命令可以实现</p>
+<h4 id="信号控制"><a href="#信号控制" class="headerlink" title="信号控制"></a>信号控制</h4><p>![3](<a href="https://i.loli.net/2021/01/07/j3gkxZwGzV9YOLJ.png" target="_blank" rel="noopener">https://i.loli.net/2021/01/07/j3gkxZwGzV9YOLJ.png</a><br>0—–测试：一个进程是否存在，可以用0来测试<br>1—–hup重启：重读取配置文件</p>
+<h4 id="服务管理"><a href="#服务管理" class="headerlink" title="服务管理"></a>服务管理</h4><p><img src="https://i.loli.net/2021/01/07/iJ5XPlpr7gkOyn8.png" alt="4"><br><img src="https://i.loli.net/2021/01/07/NGR64Z9hpxdBJfb.png" alt="5"><br><img src="https://i.loli.net/2021/01/07/jr4pECxtv5ou1UF.png" alt="6"><br><img src="https://i.loli.net/2021/01/07/TGAwVd95YR1uc7M.png" alt="7"><br><img src="https://i.loli.net/2021/01/07/TGAwVd95YR1uc7M.png" alt="8"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/13/%E8%BF%9B%E7%A8%8B/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+<section id="comments" class="comments">
+  <style>
+    .comments{margin:30px;padding:10px;background:#fff}
+    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+  </style>
+  <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '.comment',
+            notify: notify,
+            verify: verify,
+            app_id: "oUkB3jHpUeq2naBH6VNtAzui-gzGzoHsz",
+            app_key: "YQiUhUmLBneTQKg4kgSG2zK4",
+            placeholder: "欢迎留言",
+            avatar:""
+        });
+    }
+</script>
+
+  </section>
+
+
+  
+    <article id="post-配置和保护SSH" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/13/%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BF%9D%E6%8A%A4SSH/">配置和保护SSH</a>
+    </h1>
+  
+
+	
+        
+        <a href="/2021/01/13/%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BF%9D%E6%8A%A4SSH/" class="archive-article-date">
+  	<time datetime="2021-01-13T01:36:51.687Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
+</a>
+
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> 私钥密钥保存路径</span><br><span class="line">&#x2F;root&#x2F;.ssh&#x2F;known_hosts（linux）</span><br><span class="line">C:\sers\Administrator\Documents\Netsarang\computer\6\secsh\hoskeys\*.pub(Windows)</span><br></pre></td></tr></table></figure>
+<h6 id="利用SSH临时执行命令"><a href="#利用SSH临时执行命令" class="headerlink" title="利用SSH临时执行命令"></a>利用SSH临时执行命令</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -X root@192.168.196.131 hostname</span><br></pre></td></tr></table></figure>
+<h6 id="查看谁链接过来：wlo或w"><a href="#查看谁链接过来：wlo或w" class="headerlink" title="查看谁链接过来：wlo或w"></a>查看谁链接过来：wlo或w</h6><p>公钥保存位置： ~/.ssh/known_hosts</p>
+<h6 id="创建密钥对方法"><a href="#创建密钥对方法" class="headerlink" title="创建密钥对方法"></a>创建密钥对方法</h6><p>ssh-keygen生成密钥对</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# ssh-keygen </span><br><span class="line">Generating public&#x2F;private rsa key pair.Enter file in which to save the key (&#x2F;root&#x2F;.ssh&#x2F;id_rsa): </span><br><span class="line">Created directory &#39;&#x2F;root&#x2F;.ssh&#39;.</span><br><span class="line">Enter passphrase (empty for no passphrase): </span><br><span class="line">Enter same passphrase again: </span><br><span class="line">Your identification has been saved in &#x2F;root&#x2F;.ssh&#x2F;id_rsa.</span><br><span class="line">Your public key has been saved in &#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:vRCPNtlq5gtFSUzU29aX1bA3CZEpwwQGELG+67NSuTU root@RHEL1.PCY.COM</span><br><span class="line">The key&#39;s randomart image is:</span><br><span class="line">+---[RSA 2048]----+</span><br><span class="line">|     ++&#x3D;&#x3D;++. o&#x3D;..|</span><br><span class="line">|      ..o..+ o..+|</span><br><span class="line">|     .  +  oo..o+|</span><br><span class="line">|    .  . B. o .oo|</span><br><span class="line">|     .. S +.   . |</span><br><span class="line">|     o.E + .     |</span><br><span class="line">|    ..+ &#x3D; .      |</span><br><span class="line">|   . o.&#x3D;         |</span><br><span class="line">|    o+o o.       |</span><br><span class="line">+----[SHA256]-----+</span><br></pre></td></tr></table></figure>
+<h6 id="复制指定公钥到需要连接的对端服务器"><a href="#复制指定公钥到需要连接的对端服务器" class="headerlink" title="复制指定公钥到需要连接的对端服务器"></a>复制指定公钥到需要连接的对端服务器</h6><p>ssh-copy-id <a href="mailto:root@192.168.196.131">root@192.168.196.131</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# ssh-copy-id root@192.168.196.131</span><br><span class="line">&#x2F;usr&#x2F;bin&#x2F;ssh-copy-id: INFO: Source of key(s) to be installed: &quot;&#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub&quot;</span><br><span class="line">The authenticity of host &#39;192.168.196.131 (192.168.196.131)&#39; can&#39;t be established.</span><br><span class="line">ECDSA key fingerprint is SHA256:EGZtbzQwMt7akqucTfg6AhtcRZT1WEALlMGC8qFYRwQ.</span><br><span class="line">Are you sure you want to continue connecting (yes&#x2F;no)?</span><br></pre></td></tr></table></figure>
+<h6 id="SSH连接，指定私钥即可"><a href="#SSH连接，指定私钥即可" class="headerlink" title="SSH连接，指定私钥即可"></a>SSH连接，指定私钥即可</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -X root@IP地址</span><br></pre></td></tr></table></figure>
+<h6 id="自定公SSH公私钥连接"><a href="#自定公SSH公私钥连接" class="headerlink" title="自定公SSH公私钥连接"></a>自定公SSH公私钥连接</h6><p>ssh-keygen -n</p>
+<h6 id="SSHD配置——-禁止root用户登录"><a href="#SSHD配置——-禁止root用户登录" class="headerlink" title="SSHD配置——- 禁止root用户登录"></a>SSHD配置——- 禁止root用户登录</h6><p>vim /etc/ssh/sshd_config<br>修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#LoginGraceTime 2m</span><br><span class="line">PermitRootLogin yes----改成no</span><br></pre></td></tr></table></figure>
+<p>systemctl restart sshd 重启这个服务</p>
+<h6 id="修改SSH端口"><a href="#修改SSH端口" class="headerlink" title="修改SSH端口"></a>修改SSH端口</h6><p>vim /etc/ssh/sshd_config</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line">#Port 22-------&gt;去掉# 改成其他可用端口</span><br><span class="line">#AddressFamily any</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/13/%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BF%9D%E6%8A%A4SSH/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+<section id="comments" class="comments">
+  <style>
+    .comments{margin:30px;padding:10px;background:#fff}
+    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+  </style>
+  <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '.comment',
+            notify: notify,
+            verify: verify,
+            app_id: "oUkB3jHpUeq2naBH6VNtAzui-gzGzoHsz",
+            app_key: "YQiUhUmLBneTQKg4kgSG2zK4",
+            placeholder: "欢迎留言",
+            avatar:""
+        });
+    }
+</script>
+
+  </section>
+
+
+  
+    <article id="post-日志管理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/13/%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/">日志管理</a>
+    </h1>
+  
+
+	
+        
+        <a href="/2021/01/13/%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/" class="archive-article-date">
+  	<time datetime="2021-01-13T01:36:13.075Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
+</a>
+
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1：要记录用户；2：记录用户在几点几分做了什么操作</p>
+<h4 id="1，概念"><a href="#1，概念" class="headerlink" title="1，概念"></a>1，概念</h4><p>日志通过什么协议记录的呢？ syslog<br>需要其他服务来进行日志整理<br><strong>Syslog</strong>:一个协议一个标准<br><strong>systemd-journald.service</strong>:记录服务有关,开机引导有关的日志，服务在运行时候才有关的日志<br>保存在以二进制文件的形式保存在内存,如果新系统被重启以后,systemd-journald.service保存的日志就没有了<br><strong>rsyslog.service</strong>:就是要把systemd-journald.service保存的二进制内容：转换成文本文档.并且会保存在/var/log中！</p>
+<h4 id="2-日志分类"><a href="#2-日志分类" class="headerlink" title="2.日志分类"></a>2.日志分类</h4><table>
+<thead>
+<tr>
+<th>/var/log/messages</th>
+<th>大多数系统日志消息记录在此处列外包括与身份验证 ,电子邮件处理和调度作业执行相关的消息以及纯粹与调试相关的消息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/var/log/secure</td>
+<td>与安全性和身份验证事件相关syslog消息</td>
+</tr>
+<tr>
+<td>/var/log/maillog</td>
+<td>与邮件服务器相关的syslog消息</td>
+</tr>
+<tr>
+<td>/var/log/cron</td>
+<td>与调度作业执行相关的syslog消息</td>
+</tr>
+<tr>
+<td>/var/log/boot.log</td>
+<td>与系统启动相关的非syslog控制台消息</td>
+</tr>
+<tr>
+<td>/var/log/secure ：一般和登陆有关</td>
+<td></td>
+</tr>
+<tr>
+<td>systemd-journald.service：是没有分类的！</td>
+<td></td>
+</tr>
+<tr>
+<td>/etc/httpd/conf.d/httpd.conf中有格式定a义</td>
+<td></td>
+</tr>
+<tr>
+<td>在你日后使用linux的时候， 你如果要查看日志的，需要知道：</td>
+<td></td>
+</tr>
+<tr>
+<td><img src="https://i.loli.net/2021/01/11/I9NDjVFKM7lWQ1s.png" alt="1"></td>
+<td></td>
+</tr>
+<tr>
+<td><img src="https://i.loli.net/2021/01/11/AlBR8eL7wM6hOYH.png" alt="2"></td>
+<td></td>
+</tr>
+<tr>
+<td>1. 查看的是什么样的日志：比如什么样的服务</td>
+<td></td>
+</tr>
+<tr>
+<td>2. 查看的是系统有关的的日志或者服务的简略日志：/var/log /——:systemctl status xxx(服务名)</td>
+<td></td>
+</tr>
+<tr>
+<td>3. 更多的场景下是通过专门的记录日志的方式：ELK</td>
+<td></td>
+</tr>
+<tr>
+<td>###### 问题</td>
+<td></td>
+</tr>
+<tr>
+<td>rsyslog：分门别类的存放，是通过rsyslog的配置文件中定义的。</td>
+<td></td>
+</tr>
+<tr>
+<td>/etc/rsyslog.conf</td>
+<td></td>
+</tr>
+<tr>
+<td>###### 日志轮替</td>
+<td></td>
+</tr>
+<tr>
+<td><img src="https://i.loli.net/2021/01/11/cYnqBFVh3AjMpwe.png" alt="3"></td>
+<td></td>
+</tr>
+<tr>
+<td><img src="https://i.loli.net/2021/01/11/OoxY1rPVXpivcWJ.png" alt="4"></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>查找system,journnal</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# find &#x2F; -name system.journal</span><br><span class="line">&#x2F;run&#x2F;log&#x2F;journal&#x2F;d64a1f3e03004f7baa365fbee8bb5ec7&#x2F;system.journal</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>查看内存日志：journalctl</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 d64a1f3e03004f7baa365fbee8bb5ec7]# journalctl --since 21:52 --until 22:50</span><br><span class="line">-n:后面第几行</span><br><span class="line">-X:错误日志</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td>[root@RHEL1 d64a1f3e03004f7baa365fbee8bb5ec7]# vim /etc/systemd/journald.conf</td>
+<td></td>
+</tr>
+<tr>
+<td><img src="https://i.loli.net/2021/01/11/Wvl1b2oE8qQj3e5.png" alt="5"></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>systemctl restart systemd-journald//重启服务</p>
+<h4 id="时间与时区"><a href="#时间与时区" class="headerlink" title="时间与时区"></a>时间与时区</h4><p>*<em>timedatectl //查看时间<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> [root@RHEL1 ~]# timedatectl</span><br><span class="line">               Local time: Sun 2021-01-10 22:27:15 EST</span><br><span class="line">           Universal time: Mon 2021-01-11 03:27:15 UTC</span><br><span class="line">                 RTC time: Mon 2021-01-11 03:27:15</span><br><span class="line">                Time zone: America&#x2F;New_York (EST, -0500)</span><br><span class="line">System clock synchronized: yes</span><br><span class="line">              NTP service: active</span><br><span class="line">          RTC in local TZ: no</span><br></pre></td></tr></table></figure><br>*</em> 设置时区:timedatectl set-timezone  “ “<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# timedatectl set-timezone &quot;Asia&#x2F;Shanghai&quot;</span><br><span class="line">[root@RHEL1 ~]# timedatectl</span><br><span class="line">               Local time: Mon 2021-01-11 11:30:15 CST</span><br><span class="line">           Universal time: Mon 2021-01-11 03:30:15 UTC</span><br><span class="line">                 RTC time: Mon 2021-01-11 03:30:15</span><br><span class="line">                Time zone: Asia&#x2F;Shanghai (CST, +0800)</span><br><span class="line">System clock synchronized: yes</span><br><span class="line">              NTP service: active</span><br><span class="line">          RTC in local TZ: no</span><br></pre></td></tr></table></figure></p>
+<h5 id="配置chrony-NTP-服务"><a href="#配置chrony-NTP-服务" class="headerlink" title="配置chrony (NTP)服务"></a>配置chrony (NTP)服务</h5><h6 id="PS：NTP默认时开启的如果想手动设置必须关闭自动服"><a href="#PS：NTP默认时开启的如果想手动设置必须关闭自动服" class="headerlink" title="PS：NTP默认时开启的如果想手动设置必须关闭自动服"></a>PS：NTP默认时开启的如果想手动设置必须关闭自动服</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# timedatectl set-ntp  false &#x2F;&#x2F;关闭NTP同步</span><br><span class="line">[root@RHEL1 ~]# timedatectl set-ntp  true &#x2F;&#x2F;开启NTP同步</span><br></pre></td></tr></table></figure>
+<p><strong>如何配置NTP同步（8.0以前：net.conf）<br>/etc/chrony.conf //NTP配置文件</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Please consider joining the pool (http:&#x2F;&#x2F;www.pool.ntp.org&#x2F;join.html).</span><br><span class="line">pool 2.rhel.pool.ntp.org iburst</span><br><span class="line">pool  NTP服务器name iburst &#x2F;&#x2F;添自动同步功能</span><br><span class="line">[root@RHEL1 ~]# systemctl restart chronyd.service &#x2F;&#x2F;重启服务</span><br></pre></td></tr></table></figure>
+<p><strong>查看时间同步源</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# chronyc sources -v &#x2F;&#x2F;查看时间同步源</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/13/%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+<section id="comments" class="comments">
+  <style>
+    .comments{margin:30px;padding:10px;background:#fff}
+    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+  </style>
+  <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '.comment',
+            notify: notify,
+            verify: verify,
+            app_id: "oUkB3jHpUeq2naBH6VNtAzui-gzGzoHsz",
+            app_key: "YQiUhUmLBneTQKg4kgSG2zK4",
+            placeholder: "欢迎留言",
+            avatar:""
+        });
+    }
+</script>
+
+  </section>
+
+
+  
+    <article id="post-网络管理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/13/%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86/">网络管理</a>
+    </h1>
+  
+
+	
+        
+        <a href="/2021/01/13/%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86/" class="archive-article-date">
+  	<time datetime="2021-01-13T01:35:32.431Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
+</a>
+
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="网络管理"><a href="#网络管理" class="headerlink" title="网络管理"></a>网络管理</h4><p>在8.0以前的版本：有一个专门的network服务但是在8.0中默认不再有这个服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@RHEL1 ~]# systemctl status network</span><br><span class="line">Unit network.service could not be found. &#x2F;&#x2F;网络服务找不到</span><br></pre></td></tr></table></figure>
+<p>*<em>networkManager服务 *</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@RHEL1 ~]# systemctl status NetworkManager</span><br></pre></td></tr></table></figure>
+<p>在8.0以后这个服务不在允许关闭</p>
+<p>查看网络信息<br>1&gt;IP地址信息，mac信息,状态信息等</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@RHEL1 ~]# ip address show</span><br></pre></td></tr></table></figure>
+<p>2&gt;路由信息的查看： IP route</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# ip route</span><br><span class="line">[root@RHEL1 ~]# route -n</span><br><span class="line">[root@RHEL1 ~]# nmcli connection add type  ethernet ifname ens224 con-name ens224 &#x2F;&#x2F;写路由</span><br></pre></td></tr></table></figure>
+<p>3&gt;查看dns信息： /etc/resolv.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# cat &#x2F;etc&#x2F;resolv.conf</span><br></pre></td></tr></table></figure>
+<p>4&gt;网络接口信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# ifconfig ens160</span><br><span class="line">[root@RHEL1 ~]# ip -s link show ens160</span><br></pre></td></tr></table></figure>
+<p>5&gt; 网络连通性测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ping</span><br><span class="line">    -c 几个包</span><br><span class="line">     -s  包大小</span><br><span class="line">tracepath &#x2F;&#x2F;路由路径查看</span><br></pre></td></tr></table></figure>
+<p>6&gt; 查看端口信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lsof</span><br><span class="line"> -i:端口号 &#x2F;&#x2F;查看指定的端口信息</span><br><span class="line">netstat 或着 ss</span><br><span class="line">     -tulnp</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/01/11/RmyhcCsUHzBvtVZ.png" alt="1"></p>
+<h4 id="网络信息的配置与管理"><a href="#网络信息的配置与管理" class="headerlink" title="网络信息的配置与管理"></a>网络信息的配置与管理</h4><p>（1）IP地址的配置修改，路由的配置，DNS的配置的等<br>在RHEL之前，直接修改网卡配置文件后，重启network服务;<br>之后，已经不再提供network服务,所有网络管理都是通过NetworkManager来完成（Tips：直接修改配置文件依然有效）<br>NetworkManager既提供了图形化的工具，有提供看命令：<br>命令行界面：nmcli（NetworkManager client）<br>nmcli connection 参数（connection：连接）<br><img src="https://i.loli.net/2021/01/11/jRyrbiW7F8Zdsnp.png" alt="2"><br><strong><code>[root@RHEL1 ~]# nmcli device status //查看添加是否成功</code></strong></p>
+<h5 id="如何才能修改连接"><a href="#如何才能修改连接" class="headerlink" title="如何才能修改连接"></a>如何才能修改连接</h5><p><strong>1&gt;首先确认该设备信息。比如名字，状态之类的以及对应的连接和连接文件</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# ip addr show  ens224</span><br><span class="line">5: ens224: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000</span><br><span class="line">    link&#x2F;ether 00:0c:29:83:38:c1 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    </span><br><span class="line">[root@RHEL1 ~]# nmcli device status</span><br><span class="line">DEVICE      TYPE      STATE         CONNECTION</span><br><span class="line">ens160      ethernet  connected     ens160</span><br><span class="line">virbr0      bridge    connected     virbr0</span><br><span class="line">ens224      ethernet  disconnected  --</span><br><span class="line">lo          loopback  unmanaged     --</span><br><span class="line">virbr0-nic  tun       unmanaged     --</span><br></pre></td></tr></table></figure>
+<p><strong>激活设备连接：nmcli device connect 接口</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# nmcli device connect ens224</span><br><span class="line">Device &#39;ens224&#39; successfully activated with &#39;b32db412-045e-45f9-93a1-355ff422abfe&#39;.</span><br><span class="line">[root@RHEL1 ~]#</span><br></pre></td></tr></table></figure>
+<p>一个设备一定时有连接的：<br>如果没有，nmcli device (cinnect)没有自动生成<br>如果有，但是没有connected的,那也是处于disconnected的状态<br><strong>确然设备来连接需要确定三个点</strong><br>&lt;1&gt; 设备（device）状态<br><strong><code>[root@RHEL1 ~]# nmcli device status</code></strong><br>&lt;2&gt;设备（device）的连接<br><strong><code>[root@RHEL1 ~]# nmcli connection show</code></strong><br>&lt;3&gt;设备（device）所对应的连接配置文件<br><strong><code>[root@RHEL1 ~]# ll /etc/sysconfig/network-scripts/ifcfg-ens224</code></strong></p>
+<h5 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h5><p>1&gt; 当你通过<code>nmcli device status</code>查看一个设备状态时disconnected的时候，执行 <code>nmcli device connect 接口名称</code>自动创建文件连接(tips:影响，这样就能看到nmcli connection show)的连接文件也就有了<br>2&gt; <code>nmcli device status</code>已经存在就不用理会了<br>3&gt;<code>nmcli connection modify</code>来修改设备所对应的连接属性（可修改IP,子网掩码,网关和DNS这四个信息）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nmcli connection modify ens224  ipv4.addresses 192.168.10.1&#x2F;24 &#x2F;&#x2F;修改IP地址</span><br><span class="line">nmcli connection modify ens224 ipv4.method manual&#x2F;&#x2F;设置手动修改网卡</span><br><span class="line">nmcli connection reload ens224 &#x2F;&#x2F;刷新这张网卡</span><br><span class="line">nmcli connection down ens224 &#x2F;&#x2F;重载网卡</span><br><span class="line"> nmcli connection up ens224</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/01/11/PzHcQu6YhKv1C9i.png" alt="3"><br>对于网络设备而言<br>1&gt;设备<br>就是你对应的网卡<br>有设备的名字：设备的名字其实也是一种属性： 这种属性时可以通过系应该连接的来方式来修改的<br>connect<br>disconnect</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nmcli connection modify ens224 con.id &quot;test1&quot;&#x2F;&#x2F;修改连接名</span><br><span class="line">nmcli connection reload ens224 &#x2F;&#x2F;重启接口</span><br></pre></td></tr></table></figure>
+<p>得到connect的方式有两种<br>方式一：自动创建连接文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# nmcli  device connect ens224</span><br><span class="line">Device &#39;ens224&#39; successfully activated with &#39;b32db412-045e-45f9-93a1-355ff422abfe&#39;.</span><br></pre></td></tr></table></figure>
+<p>方式二：手动添加连接对设备进行关联</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# nmcli connection add type  ethernet ifname ens224 con-name ens224</span><br><span class="line">    --type ethernet&#x2F;&#x2F;类型以太网</span><br><span class="line">    --ifname ens224 连接名字</span><br><span class="line">    --con-name ens224&#x2F;&#x2F;名字</span><br></pre></td></tr></table></figure>
+<h4 id="DNS设置"><a href="#DNS设置" class="headerlink" title="DNS设置"></a>DNS设置</h4><p><strong>若存在多个网卡的情况下，我们只需要再任意一张网卡上任意一张网卡上设置DNS就好了，不需要在所有的网卡配置上都去配置DNS<br>方法一：将DNS绑定再任意一张网卡上配置上</strong><br><strong><code>[root@RHEL1 /]#  vim /etc/sysconfig/network-scripts/ifcfg-ens224</code></strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">HWADDR&#x3D;00:0C:29:83:38:C1</span><br><span class="line">TYPE&#x3D;Ethernet</span><br><span class="line">PROXY_METHOD&#x3D;none</span><br><span class="line">BROWSER_ONLY&#x3D;no</span><br><span class="line">BOOTPROTO&#x3D;none</span><br><span class="line">#BOOTPROTO&#x3D;static</span><br><span class="line">DEFROUTE&#x3D;yes</span><br><span class="line">IPV4_FAILURE_FATAL&#x3D;no</span><br><span class="line">IPV6INIT&#x3D;yes</span><br><span class="line">IPV6_AUTOCONF&#x3D;yes</span><br><span class="line">IPV6_DEFROUTE&#x3D;yes</span><br><span class="line">IPV6_FAILURE_FATAL&#x3D;no</span><br><span class="line">IPV6_ADDR_GEN_MODE&#x3D;stable-privacy</span><br><span class="line">NAME&#x3D;ens224</span><br><span class="line">UUID&#x3D;b32db412-045e-45f9-93a1-355ff422abfe</span><br><span class="line">DEVICE&#x3D;ens224</span><br><span class="line">ONBOOT&#x3D;yes</span><br><span class="line">IPADDR&#x3D;192.168.10.1</span><br><span class="line">PREFIX&#x3D;24</span><br><span class="line">#NETMASK&#x3D;255.255.255.0</span><br><span class="line">GATEWAY&#x3D;192.168.10.254</span><br><span class="line">DNS1&#x3D;8.8.8.8</span><br><span class="line">DNS2&#x3D;114.114.114.114</span><br></pre></td></tr></table></figure>
+<p><strong>方法二：修改/etc/resolv.conf</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Generated by NetworkManager</span><br><span class="line">search localdomain PCY.COM</span><br><span class="line">nameserver 192.168.196.2</span><br><span class="line">nameserver 8.8.8.8</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/01/12/JntRwN4zv6iuIAj.png" alt="5"></p>
+<h4 id="链路聚合"><a href="#链路聚合" class="headerlink" title="链路聚合"></a>链路聚合</h4><p><img src="https://i.loli.net/2021/01/12/lDt8NazXsEuY4kb.png" alt="6"></p>
+<h5 id="team实现方法"><a href="#team实现方法" class="headerlink" title="team实现方法"></a>team实现方法</h5><p>1&gt;添加两块网卡并查询teamd是否安装成功<br><img src="https://i.loli.net/2021/01/12/7hgYE8iMc635omV.png" alt="1.1"><br><code>rpm -qa teamd</code></p>
+<h6 id="2-gt-创建一个逻辑绑定口（team0）"><a href="#2-gt-创建一个逻辑绑定口（team0）" class="headerlink" title="2&gt;创建一个逻辑绑定口（team0）"></a>2&gt;创建一个逻辑绑定口（team0）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#创建一个team接口并开启主备模式</span><br><span class="line"> nmcli connection add type team ifname team0 con-name team0  config  &#123;&quot;runner&#123;&quot;name&quot;:&quot;activebackup&quot;&#125;&#125;&#39;</span><br><span class="line">        --config(接口配置模式)</span><br><span class="line">        --&#123;&quot;runner&#123;&quot;name&quot;:&quot;activebackup&quot;&#125;&#125;（运行的模式为主备模式）</span><br></pre></td></tr></table></figure>
+<p><strong>ps:当记不住config后面的配置可以查看配置文件 /usr/share/doc/teamd/example_ifcfgs/3/ifcfg-team_test0</strong></p>
+<h6 id="3-gt-添加逻辑绑定口的成员（物理网卡ens224和ens256）"><a href="#3-gt-添加逻辑绑定口的成员（物理网卡ens224和ens256）" class="headerlink" title="3&gt;添加逻辑绑定口的成员（物理网卡ens224和ens256）"></a>3&gt;添加逻辑绑定口的成员（物理网卡ens224和ens256）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# nmcli connection add type team-slave ifname ens224 con-name ens224 master team0</span><br><span class="line">Connection &#39;ens224&#39; (939eb941-3dc9-423d-b268-5e5ae131f3bf) successfully added.</span><br><span class="line">[root@localhost ~]# nmcli connection add type team-slave ifname ens256 con-name ens256 master team0</span><br><span class="line">Connection &#39;ens256&#39; (e6bfce00-64a2-459c-9880-e8e7c1a86ac8) successfully added.</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<h6 id="4-gt-修改逻辑绑定口配置文件"><a href="#4-gt-修改逻辑绑定口配置文件" class="headerlink" title="4&gt;修改逻辑绑定口配置文件"></a>4&gt;修改逻辑绑定口配置文件</h6><p>/etc/sysconfig/network-scripts/ifcfg-tean0<br><img src="https://i.loli.net/2021/01/12/PreOCEabsZUYHVK.png" alt="1.2"><br>PS:物理口不需要添加IP地址</p>
+<h6 id="5-gt-重新加载，启用（默认关闭状态）"><a href="#5-gt-重新加载，启用（默认关闭状态）" class="headerlink" title="5&gt;重新加载，启用（默认关闭状态）"></a>5&gt;重新加载，启用（默认关闭状态）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# nmcli  connection reload team0</span><br><span class="line">[root@localhost ~]# nmcli  connection up team0</span><br></pre></td></tr></table></figure>
+<h6 id="测试连通性"><a href="#测试连通性" class="headerlink" title="测试连通性"></a>测试连通性</h6><p><img src="https://i.loli.net/2021/01/12/5QZ4B3Mjfsux9AU.png" alt="1.3"></p>
+<p>7&gt;teambridge测试（以active-backup为例）<br><code>teamdctl team0 state</code>查看链路聚合状态<br><img src="https://i.loli.net/2021/01/12/NmT1gWAchwCvpDr.png" alt="1.6"></p>
+<h5 id="BAND实现方法"><a href="#BAND实现方法" class="headerlink" title="BAND实现方法"></a>BAND实现方法</h5><p>bond的模式种类<br>常见的bond模式有七种：<br>Mode=0(balance-rr) 表示负载分担round-robin，和交换机的聚合强制不协商的方式配合。<br>Mode=1(active-backup) 表示主备模式，只有一块网卡是active,另外一块是备的standby，这时如果交换机配的是捆绑，将不能正常工作，因为交换机往两块网卡发包，有一半包是丢弃的。<br>Mode=2(balance-xor) 表示XOR Hash负载分担，和交换机的聚合强制不协商方式配合。（需要xmit_hash_policy）<br>Mode=3(broadcast) 表示所有包从所有interface发出，这个不均衡，只有冗余机制…和交换机的聚合强制不协商方式配合。<br>Mode=4(802.3ad) 表示支持802.3ad协议，和交换机的聚合LACP方式配合（需要xmit_hash_policy）<br>Mode=5(balance-tlb) 是根据每个slave的负载情况选择slave进行发送，接收时使用当前轮到的slave<br>Mode=6(balance-alb) 在5的tlb基础上增加了rlb。）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost 3]# nmcli  connection add type  bond ifname bond0 con-name bond0 mode active-backup&#39;       ---mode 后面可以选择模式种类</span><br><span class="line">#创建逻辑接口</span><br><span class="line">[root@localhost 3]# nmcli  connection  add   type  bond-slave ifname ens161  master bond0&#x2F;&#x2F;绑定逻辑接口</span><br><span class="line">[root@localhost 3]# nmcli  connection  add   type  bond-slave ifname ens193 master bond0</span><br><span class="line">[root@localhost 3]# nmcli connection reload&#x2F;&#x2F;重载。开启接口</span><br><span class="line">[root@localhost 3]# nmcli  connection  up bond0</span><br><span class="line">[root@localhost 3]# nmcli  connection  up bond-slave-ens161</span><br><span class="line">[root@localhost 3]# nmcli  connection  up bond-slave-ens193</span><br><span class="line">[root@localhost 3]# cat &#x2F;proc&#x2F;net&#x2F;bonding&#x2F;bond0 &#x2F;&#x2F; 查看绑定情况</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/01/12/6VMjnbIAQ8CXSTL.png" alt="1.5"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/13/%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+<section id="comments" class="comments">
+  <style>
+    .comments{margin:30px;padding:10px;background:#fff}
+    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+  </style>
+  <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '.comment',
+            notify: notify,
+            verify: verify,
+            app_id: "oUkB3jHpUeq2naBH6VNtAzui-gzGzoHsz",
+            app_key: "YQiUhUmLBneTQKg4kgSG2zK4",
+            placeholder: "欢迎留言",
+            avatar:""
+        });
+    }
+</script>
+
+  </section>
+
+
+  
     <article id="post-双机热备协议加构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -165,7 +1119,7 @@
 	
         
         <a href="/2020/12/14/%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87%E5%8D%8F%E8%AE%AE%E5%8A%A0%E6%9E%84/" class="archive-article-date">
-  	<time datetime="2020-12-14T08:29:09.930Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-14</time>
+  	<time datetime="2020-12-14T08:57:44.462Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-14</time>
 </a>
 
 
@@ -475,760 +1429,10 @@
 
 
   
-    <article id="post-Linux" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/14/Linux/">LIUNX使用方法</a>
-    </h1>
-  
-
-	
-        
-        <a href="/2020/12/14/Linux/" class="archive-article-date">
-  	<time datetime="2020-12-14T08:25:55.626Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-14</time>
-</a>
-
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Liunx-8-0"><a href="#Liunx-8-0" class="headerlink" title="Liunx(8.0)"></a>Liunx(8.0)</h2><h5 id="用户分类"><a href="#用户分类" class="headerlink" title="用户分类"></a>用户分类</h5><ul>
-<li>超级管理员（root）-UID=0</li>
-<li>系统用户（系统服务类的用户）<ul>
-<li>系统调用</li>
-<li>已部署安装的服务（比如MySQL）</li>
-</ul>
-</li>
-<li>普通用户 UID&gt;1000 student<br>ps：在实际生产环境中，系统管理员一般使普通用户去管理<br>UID：user identificartion（用户的唯一身份标识）
-        
-          <a class="article-more-a" href="/2020/12/14/Linux/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">--LINUX
---技术文化</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/14/Linux/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-<section id="comments" class="comments">
-  <style>
-    .comments{margin:30px;padding:10px;background:#fff}
-    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-  </style>
-  <div id="vcomment" class="comment"></div> 
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        new Valine({
-            el: '.comment',
-            notify: notify,
-            verify: verify,
-            app_id: "oUkB3jHpUeq2naBH6VNtAzui-gzGzoHsz",
-            app_key: "YQiUhUmLBneTQKg4kgSG2zK4",
-            placeholder: "欢迎留言",
-            avatar:""
-        });
-    }
-</script>
-
-  </section>
-
-
-  
-    <article id="post-ENSP进入安全策略视图" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/14/ENSP%E8%BF%9B%E5%85%A5%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5%E8%A7%86%E5%9B%BE/">华为防火墙</a>
-    </h1>
-  
-
-	
-        
-        <a href="/2020/12/14/ENSP%E8%BF%9B%E5%85%A5%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5%E8%A7%86%E5%9B%BE/" class="archive-article-date">
-  	<time datetime="2020-12-14T08:24:05.267Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-14</time>
-</a>
-
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h6 id="进入安全策略视图"><a href="#进入安全策略视图" class="headerlink" title="进入安全策略视图"></a>进入安全策略视图</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">security-policy</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2020/12/14/ENSP%E8%BF%9B%E5%85%A5%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5%E8%A7%86%E5%9B%BE/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">--防火墙 --知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/14/ENSP%E8%BF%9B%E5%85%A5%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5%E8%A7%86%E5%9B%BE/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-<section id="comments" class="comments">
-  <style>
-    .comments{margin:30px;padding:10px;background:#fff}
-    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-  </style>
-  <div id="vcomment" class="comment"></div> 
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        new Valine({
-            el: '.comment',
-            notify: notify,
-            verify: verify,
-            app_id: "oUkB3jHpUeq2naBH6VNtAzui-gzGzoHsz",
-            app_key: "YQiUhUmLBneTQKg4kgSG2zK4",
-            placeholder: "欢迎留言",
-            avatar:""
-        });
-    }
-</script>
-
-  </section>
-
-
-  
-    <article id="post-AAA" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/14/AAA/">3A（审计，认证，授权）认证介绍</a>
-    </h1>
-  
-
-	
-        
-        <a href="/2020/12/14/AAA/" class="archive-article-date">
-  	<time datetime="2020-12-14T08:20:52.972Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-14</time>
-</a>
-
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="AAA"><a href="#AAA" class="headerlink" title="AAA"></a>AAA</h4><h6 id="（Authentication认证）"><a href="#（Authentication认证）" class="headerlink" title="（Authentication认证）"></a>（Authentication认证）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">认证的方式包括</span><br><span class="line">* 我知道：用户所知道的信息（如：密码，个人识别号（PIN）等）</span><br><span class="line">* 我拥有：用户使用的信息（如：命令卡，智能卡，银行卡）</span><br><span class="line">* 我具有：用户所具有的生物特征，（如，指纹，声音，视网膜，DNA）</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2020/12/14/AAA/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">--AAA --知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/14/AAA/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-<section id="comments" class="comments">
-  <style>
-    .comments{margin:30px;padding:10px;background:#fff}
-    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-  </style>
-  <div id="vcomment" class="comment"></div> 
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        new Valine({
-            el: '.comment',
-            notify: notify,
-            verify: verify,
-            app_id: "oUkB3jHpUeq2naBH6VNtAzui-gzGzoHsz",
-            app_key: "YQiUhUmLBneTQKg4kgSG2zK4",
-            placeholder: "欢迎留言",
-            avatar:""
-        });
-    }
-</script>
-
-  </section>
-
-
-  
-    <article id="post-VRF感知型防火墙" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/14/VRF%E6%84%9F%E7%9F%A5%E5%9E%8B%E9%98%B2%E7%81%AB%E5%A2%99/">VRF基础介绍</a>
-    </h1>
-  
-
-	
-        
-        <a href="/2020/12/14/VRF%E6%84%9F%E7%9F%A5%E5%9E%8B%E9%98%B2%E7%81%AB%E5%A2%99/" class="archive-article-date">
-  	<time datetime="2020-12-14T08:20:36.700Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-14</time>
-</a>
-
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="VRF感知型防火墙"><a href="#VRF感知型防火墙" class="headerlink" title="VRF感知型防火墙"></a>VRF感知型防火墙</h1><h5 id="ZBF-支持VRF-aware-的Cisco-IOS虚拟化技术"><a href="#ZBF-支持VRF-aware-的Cisco-IOS虚拟化技术" class="headerlink" title="ZBF 支持VRF-aware 的Cisco IOS虚拟化技术"></a>ZBF 支持VRF-aware 的Cisco IOS虚拟化技术</h5><ul>
-<li>可以配置Zones到VRF激活的接口上，来实现虚拟化的ZBF策略</li>
-<li>不需要特殊的ZBF配置
-        
-          <a class="article-more-a" href="/2020/12/14/VRF%E6%84%9F%E7%9F%A5%E5%9E%8B%E9%98%B2%E7%81%AB%E5%A2%99/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">--网络 --ENSP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/14/VRF%E6%84%9F%E7%9F%A5%E5%9E%8B%E9%98%B2%E7%81%AB%E5%A2%99/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-<section id="comments" class="comments">
-  <style>
-    .comments{margin:30px;padding:10px;background:#fff}
-    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-  </style>
-  <div id="vcomment" class="comment"></div> 
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        new Valine({
-            el: '.comment',
-            notify: notify,
-            verify: verify,
-            app_id: "oUkB3jHpUeq2naBH6VNtAzui-gzGzoHsz",
-            app_key: "YQiUhUmLBneTQKg4kgSG2zK4",
-            placeholder: "欢迎留言",
-            avatar:""
-        });
-    }
-</script>
-
-  </section>
-
-
-  
-    <article id="post-信息安全管理与评估第一阶段习题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/02/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E4%B8%8E%E8%AF%84%E4%BC%B0%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E4%B9%A0%E9%A2%98/">信息安全与评估</a>
-    </h1>
-  
-
-	
-        
-        <a href="/2020/11/02/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E4%B8%8E%E8%AF%84%E4%BC%B0%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E4%B9%A0%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2020-11-02T06:53:54.247Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-02</time>
-</a>
-
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h6 id="1-总部核心交换机DCRS上开启SSH远程管理功能-本地认证用户名-2019DCN-密码：DCN2012"><a href="#1-总部核心交换机DCRS上开启SSH远程管理功能-本地认证用户名-2019DCN-密码：DCN2012" class="headerlink" title="1.总部核心交换机DCRS上开启SSH远程管理功能, 本地认证用户名:2019DCN,密码：DCN2012"></a>1.总部核心交换机DCRS上开启SSH远程管理功能, 本地认证用户名:2019DCN,密码：DCN2012</h6> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh-server enable &#x2F;&#x2F;打开ssh服务</span><br><span class="line">username  2019DCN  privilege 15 password DCN2012 &#x2F;&#x2F;创建用户2019DCN  级别15  密码为DCN2012</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2020/11/02/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E4%B8%8E%E8%AF%84%E4%BC%B0%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E4%B9%A0%E9%A2%98/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">--神州数码 --DCN</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/02/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E4%B8%8E%E8%AF%84%E4%BC%B0%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E4%B9%A0%E9%A2%98/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-<section id="comments" class="comments">
-  <style>
-    .comments{margin:30px;padding:10px;background:#fff}
-    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-  </style>
-  <div id="vcomment" class="comment"></div> 
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        new Valine({
-            el: '.comment',
-            notify: notify,
-            verify: verify,
-            app_id: "oUkB3jHpUeq2naBH6VNtAzui-gzGzoHsz",
-            app_key: "YQiUhUmLBneTQKg4kgSG2zK4",
-            placeholder: "欢迎留言",
-            avatar:""
-        });
-    }
-</script>
-
-  </section>
-
-
-  
-    <article id="post-岁月之痛" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/29/%E5%B2%81%E6%9C%88%E4%B9%8B%E7%97%9B/">岁月之痛</a>
-    </h1>
-  
-
-	
-        
-        <a href="/2020/05/29/%E5%B2%81%E6%9C%88%E4%B9%8B%E7%97%9B/" class="archive-article-date">
-  	<time datetime="2020-05-29T13:09:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-29</time>
-</a>
-
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote class="blockquote-center">岁月之痛</blockquote>
-
-<h4 id="板板大人"><a href="#板板大人" class="headerlink" title="板板大人"></a>板板大人</h4><p>直到现在，我依稀还记得，我问向妈妈的那个问题。<br>“妈妈呀，我能不能马上长大！”<br>妈妈嘴角满是无奈，却也认真的回答：做小宝宝不快乐吗？<br>我仰着脑袋看着妈妈，眼里充满着光芒“长大了，我可以吃好多好吃的”。<br>现在我回想时，还真是有一点啼笑皆非，当我们还是小孩子的时候，我们都渴望长大，等我们长大后，却也渴望小时候的天真单纯，</p>
-        
-          <a class="article-more-a" href="/2020/05/29/%E5%B2%81%E6%9C%88%E4%B9%8B%E7%97%9B/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">--岁月无情，忆珍惜 --作者：板板大人</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/29/%E5%B2%81%E6%9C%88%E4%B9%8B%E7%97%9B/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-<section id="comments" class="comments">
-  <style>
-    .comments{margin:30px;padding:10px;background:#fff}
-    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-  </style>
-  <div id="vcomment" class="comment"></div> 
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        new Valine({
-            el: '.comment',
-            notify: notify,
-            verify: verify,
-            app_id: "oUkB3jHpUeq2naBH6VNtAzui-gzGzoHsz",
-            app_key: "YQiUhUmLBneTQKg4kgSG2zK4",
-            placeholder: "欢迎留言",
-            avatar:""
-        });
-    }
-</script>
-
-  </section>
-
-
-  
-    <article id="post-Markdown使用方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/28/Markdown%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/">Markdown使用方法</a>
-    </h1>
-  
-
-	
-        
-        <a href="/2020/05/28/Markdown%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-05-28T12:55:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-28</time>
-</a>
-
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>具体请查看：</p>
-        
-          <a class="article-more-a" href="/2020/05/28/Markdown%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">--markdown</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/28/Markdown%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-<section id="comments" class="comments">
-  <style>
-    .comments{margin:30px;padding:10px;background:#fff}
-    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-  </style>
-  <div id="vcomment" class="comment"></div> 
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        new Valine({
-            el: '.comment',
-            notify: notify,
-            verify: verify,
-            app_id: "oUkB3jHpUeq2naBH6VNtAzui-gzGzoHsz",
-            app_key: "YQiUhUmLBneTQKg4kgSG2zK4",
-            placeholder: "欢迎留言",
-            avatar:""
-        });
-    }
-</script>
-
-  </section>
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+    </nav>
   
 
 
@@ -1239,7 +1443,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 W P
+    		&copy; 2021 W P
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://Wp-blog-maker.github.io/" target="_blank">W P</a> by Litten
@@ -1337,12 +1541,12 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">--LINUX
---技术文化</a>
+                <a href="javascript:void(0)" class="js-tag color1">--markdown</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">--markdown</a>
+                <a href="javascript:void(0)" class="js-tag color5">--LINUX
+--技术文化</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1351,7 +1555,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">--神州数码 --DCN</a>
+                <a href="javascript:void(0)" class="js-tag color2">--网络 --ENSP</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1359,7 +1563,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">--网络 --ENSP</a>
+                <a href="javascript:void(0)" class="js-tag color3">--神州数码 --DCN</a>
               </li>
              
               <li class="article-tag-list-item">

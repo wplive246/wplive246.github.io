@@ -6,24 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>3A（审计，认证，授权）认证介绍 | 成长之旅</title>
+  <title>文件权限 | 成长之旅</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="AAA（Authentication认证）1234认证的方式包括* 我知道：用户所知道的信息（如：密码，个人识别号（PIN）等）* 我拥有：用户使用的信息（如：命令卡，智能卡，银行卡）* 我具有：用户所具有的生物特征，（如，指纹，声音，视网膜，DNA）">
+  <meta name="description" content="文件权限定以：就是一个用户针对一个目录或者文件具备什么样的操作权限2，几个概念    （1）身份：一个用户针对一个目录或者文件具备什么样的操作权限        身份分类：所有者（拥有者），属组，其他人 12[root@RHEL1 ~]# ls -ld &#x2F;etc&#x2F;fstab -rw-r--r--. 1 root root 579 Dec  1 12:49 &#x2F;etc&amp;#">
 <meta property="og:type" content="article">
-<meta property="og:title" content="3A（审计，认证，授权）认证介绍">
-<meta property="og:url" content="http://yoursite.com/2020/12/14/AAA/index.html">
+<meta property="og:title" content="文件权限">
+<meta property="og:url" content="http://yoursite.com/2021/01/13/%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90/index.html">
 <meta property="og:site_name" content="成长之旅">
-<meta property="og:description" content="AAA（Authentication认证）1234认证的方式包括* 我知道：用户所知道的信息（如：密码，个人识别号（PIN）等）* 我拥有：用户使用的信息（如：命令卡，智能卡，银行卡）* 我具有：用户所具有的生物特征，（如，指纹，声音，视网膜，DNA）">
+<meta property="og:description" content="文件权限定以：就是一个用户针对一个目录或者文件具备什么样的操作权限2，几个概念    （1）身份：一个用户针对一个目录或者文件具备什么样的操作权限        身份分类：所有者（拥有者），属组，其他人 12[root@RHEL1 ~]# ls -ld &#x2F;etc&#x2F;fstab -rw-r--r--. 1 root root 579 Dec  1 12:49 &#x2F;etc&amp;#">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://i.loli.net/2020/11/23/t1NLsqX6kTBHp2b.png">
-<meta property="og:image" content="https://i.loli.net/2020/11/23/HLQqYSzG1iahv5J.png">
-<meta property="og:image" content="https://i.loli.net/2020/11/23/tuhfZ7YNIKjR24M.png">
-<meta property="article:published_time" content="2020-12-14T08:20:52.972Z">
-<meta property="article:modified_time" content="2020-12-14T08:20:52.972Z">
+<meta property="article:published_time" content="2021-01-13T01:39:08.400Z">
+<meta property="article:modified_time" content="2021-01-13T01:39:08.400Z">
 <meta property="article:author" content="W P">
-<meta property="article:tag" content="--AAA --知识">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2020/11/23/t1NLsqX6kTBHp2b.png">
   
     <link rel="alternative" href="/atom.xml" title="成长之旅" type="application/atom+xml">
   
@@ -158,14 +153,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-AAA" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-文件权限" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      3A（审计，认证，授权）认证介绍
+      文件权限
     </h1>
   
 
@@ -175,8 +170,8 @@
 		</span>
 	
         
-        <a href="/2020/12/14/AAA/" class="archive-article-date">
-  	<time datetime="2020-12-14T08:20:52.972Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-14</time>
+        <a href="/2021/01/13/%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90/" class="archive-article-date">
+  	<time datetime="2021-01-13T01:39:08.400Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-13</time>
 </a>
 
 
@@ -185,22 +180,80 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="AAA"><a href="#AAA" class="headerlink" title="AAA"></a>AAA</h4><h6 id="（Authentication认证）"><a href="#（Authentication认证）" class="headerlink" title="（Authentication认证）"></a>（Authentication认证）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">认证的方式包括</span><br><span class="line">* 我知道：用户所知道的信息（如：密码，个人识别号（PIN）等）</span><br><span class="line">* 我拥有：用户使用的信息（如：命令卡，智能卡，银行卡）</span><br><span class="line">* 我具有：用户所具有的生物特征，（如，指纹，声音，视网膜，DNA）</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<h6 id="Authorization-授权"><a href="#Authorization-授权" class="headerlink" title="Authorization(授权)"></a>Authorization(授权)</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* 用户能访问的资源</span><br><span class="line">* 用户能使用的命令</span><br></pre></td></tr></table></figure>
-<h6 id="Accounting（审计）"><a href="#Accounting（审计）" class="headerlink" title="Accounting（审计）"></a>Accounting（审计）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* 用户用多少时间</span><br><span class="line">* 用户花了多少钱</span><br><span class="line">* 用户做了哪些操作</span><br></pre></td></tr></table></figure>
-<h3 id="Radius"><a href="#Radius" class="headerlink" title="Radius"></a>Radius</h3><p><img src="https://i.loli.net/2020/11/23/t1NLsqX6kTBHp2b.png" alt="1"><br><img src="https://i.loli.net/2020/11/23/HLQqYSzG1iahv5J.png" alt="2"><br><img src="https://i.loli.net/2020/11/23/tuhfZ7YNIKjR24M.png" alt="3"></p>
-<h3 id="LDAP"><a href="#LDAP" class="headerlink" title="LDAP"></a>LDAP</h3><ul>
-<li>LDAP也是基于C/S架构的，LDAP服务器负责对来自应用服务器的请求进行认证，同时还指定用户登录的应用服务器所允许访问的资源范围等<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">A[用户] --&gt; |1请求服务| B(应用服务器)</span><br><span class="line"> B --&gt; | 2认证请求| C(LDAP服务器)</span><br><span class="line"> C --&gt; |3. 认证结果| B </span><br><span class="line"> B --&gt; | 4.接入|D[授权资源]</span><br></pre></td></tr></table></figure>
-<h3 id="用户管理分类"><a href="#用户管理分类" class="headerlink" title="用户管理分类"></a>用户管理分类</h3><h5 id="上网用户管理"><a href="#上网用户管理" class="headerlink" title="上网用户管理"></a>上网用户管理</h5>内部网络中访问网络资源的主体，如企业总部的内部员工，上网用户可以直接通过NGFW访问网络资源<h5 id="接入用户管理"><a href="#接入用户管理" class="headerlink" title="接入用户管理"></a>接入用户管理</h5>外部网络中访问网络的主体,如企业的分支机构员工和出差员工。接入用户需要先通过SSL VPN、L2TP VPN、IPSec VPN或PPPoe方式接入到NGFW、然后才能访问企业总部的网络资源<h5 id="管理员用户"><a href="#管理员用户" class="headerlink" title="管理员用户"></a>管理员用户</h5>管路员用户;指通过TTelnet、SSH,web、FTP等协议或通过Console接入访问设备并对设备进行配置或操作得当用户<h3 id="组织机构管理"><a href="#组织机构管理" class="headerlink" title="组织机构管理"></a>组织机构管理</h3></li>
-<li>系统吧默认有一个缺省认证或</li>
-<li>每个用户组可以包括多个用户和用户组</li>
-<li>每个用户组是能属于一个父用户组</li>
-<li>每个用户至少属于一个用户组，也可以属于多个用户组<br>用户组织结构中涉及如下三个概念：</li>
-<li>认证域：用户组织结构的容器</li>
-<li>用户组/用户:用户按照树形结构组织，用户隶属于组（部门）。管理员可以根据企业的组织结构来创建部门和用户</li>
-<li>安全组: 横向组织结构的跨部门群组，当需要基于部门以外的维度对用户进行管理可以创建跨部门的安全组</li>
-</ul>
+        <h5 id="文件权限"><a href="#文件权限" class="headerlink" title="文件权限"></a>文件权限</h5><p>定以：就是一个用户针对一个目录或者文件具备什么样的操作权限<br>2，几个概念<br>    （1）身份：一个用户针对一个目录或者文件具备什么样的操作权限<br>        身份分类：所有者（拥有者），属组，其他人</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# ls -ld &#x2F;etc&#x2F;fstab </span><br><span class="line">-rw-r--r--. 1 root root 579 Dec  1 12:49 &#x2F;etc&#x2F;fstab</span><br></pre></td></tr></table></figure>
+<p>root用户超级管理员，但root组是一个普通组<br>（2）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 ~]# ls -ld &#x2F;etc&#x2F;fstab </span><br><span class="line">-rw-r--r--. 1 root root 579 Dec  1 12:49 &#x2F;etc&#x2F;fstab</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>rwx</th>
+<th>rwx</th>
+<th>rwx</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>所有者</td>
+<td>所属组</td>
+<td>其他人</td>
+</tr>
+<tr>
+<td>test1：对于/etc/fstab这个文件而言，他仅有r（读取）权限，不具备w（写入）和x （执行权限）</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>R:Read可读———-能够读取文件或者目录内容的权限</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>W： write可写———能够修改文件或者目录内容</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>X: 针对文件而言，x加可执行；针对目录而言，x是否能够成为一个用户的工作目录</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>对于目录权限的分析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 tmp]# ls -ld 1</span><br><span class="line">drwxr-xr-x. 2 root root 6 Dec 21 12:29 1</span><br></pre></td></tr></table></figure>
+
+<p>显然： test1对于/tmp/1 这个文件而言，是其他人身份，所以具备的权限是r和x<br>当一个用户针对一个目录具备r权限的时候，是能够查看到该目录下的内容，问题就是目录得到内容什么呢？ 就是一系列文件名以及目录名称。test1针对这个目录而言，能够读取到这个目录下的文件名和目录名</p>
+<p>若目录r权限去掉， 则无法读取这个目录下的文件名和目录名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 tmp]# chmod (ogu)-r ,o-x 1</span><br></pre></td></tr></table></figure>
+<p>只要你想一个用户针对一个目录可访问：具备读取r和执行x权限是必须要的，单纯的r和单纯的w都是没有任何意义的！而针对目录的w（写入）很简单，即是否能在该目录下创建或者删除文件。</p>
+<p>所以，针对目录的权限设置，存在以下3种情况；<br>1&gt;rx<br>2&gt;rwx<br>3&gt;—<br>以下这些情况基本不存在<br>r–: 仅仅能够看到名字<br>-w-: 你都没有办法成为工作目录，所以没有意义<br>–x：<br>rw-：<br>-wx：<br>那么针对文件就不一样。身份问题是相同的<br><strong>r权限</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 tmp]# ls -ld f1</span><br><span class="line">-rw-r--r--. 1 root root 0 Dec 23 06:28 f1</span><br></pre></td></tr></table></figure>
+<p>w权限：只给w权限，如果不能读取文件，没啥意义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 tmp]# ls -ld f1 </span><br><span class="line">-rw-r---w-. 1 root root 0 Dec 23 06:28 f1</span><br></pre></td></tr></table></figure>
+<p>x权限：也就是文件可以拿来执行（类似于windows的exe/bat/com文件），在liunx内，能不能执行，就看他有没有x权限,能不能有正确的输出，也是靠执行权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 tmp]# &#x2F;tmp&#x2F;f1</span><br><span class="line">-bash: &#x2F;tmp&#x2F;f1: Permission denied</span><br></pre></td></tr></table></figure>
+<p>若你想执行文件，你必须看到（能读取内容）。所以必有r权限</p>
+<p>总结：对于文件而言的权限设置<br>r– 可以仅仅读取<br>rw- 可以读取<br>rwx 可读可写可执行<br>—啥都没有<br>r-x可读可执行<br>-w- –x -wx 不存在</p>
+<h5 id="3-权限修改：chmod"><a href="#3-权限修改：chmod" class="headerlink" title="3.权限修改：chmod"></a>3.权限修改：chmod</h5><p>记号法：rwx 数值法：r-&gt;4,w-&gt;2,x-&gt;1<br>u:拥有者 g:所属组 0：其他人<br>=：直接赋予权限<br>+：在原基础上加权限<br>-：在原基础上减权限<br>753：拥有者（r+w+x）=（4+3+1），其他人（wx）=2+1，所属组（rx）=4+1</p>
+<h5 id="4，身份修改：-chown-（改用户）chgrp（改组）"><a href="#4，身份修改：-chown-（改用户）chgrp（改组）" class="headerlink" title="4，身份修改： chown （改用户）chgrp（改组）"></a>4，身份修改： chown （改用户）chgrp（改组）</h5><h5 id="5，默认权限"><a href="#5，默认权限" class="headerlink" title="5，默认权限"></a>5，默认权限</h5><p>为何创建文件夹时权限755，创建文件时权限644？是因为有一个默认属性在起作用，即umask（反掩码）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 test1]# umask</span><br><span class="line">0022</span><br></pre></td></tr></table></figure>
+<p>一个目录的创建权限等于：满权限（777）-umask值<br>777-022=755<br>一个文件的创建权限等于：满权限（666）-umask值<br>666-022=644</p>
+<p>root用户和普通的umask值不一样。（查看/etc/profile文件）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if [ $UID -gt 199 ] &amp;&amp; [ &quot;&#96;id -gn&#96;&quot; &#x3D; &quot;&#96;id -un&#96;&quot; ]; then</span><br><span class="line">    umask 002</span><br><span class="line">else</span><br><span class="line">    umask 022</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>修改umask值<br>临时修改：umask<br>永久修改：vim /etc/pofile,修改后需要source /etc/profile之后永久生效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if [ $UID -gt 199 ] &amp;&amp; [ &quot;&#96;id -gn&#96;&quot; &#x3D; &quot;&#96;id -un&#96;&quot; ]; then</span><br><span class="line">    umask 002  &#x2F;&#x2F;普通用户</span><br><span class="line">else</span><br><span class="line">    umask 022 &#x2F;&#x2F; root用户</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<h5 id="6，特殊权限"><a href="#6，特殊权限" class="headerlink" title="6，特殊权限"></a>6，特殊权限</h5><p>SUID       SGID           Sticky bit<br>(1)SUID<br>普通能不能改自己密码？（能）<br>修改密码，最终是修改那个文件（/etc/shadow）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 test1]# ll &#x2F;etc&#x2F;shadow</span><br><span class="line">----------. 1 root root 1305 Dec 23 06:24 &#x2F;etc&#x2F;shadow</span><br></pre></td></tr></table></figure>
+<p>既然无权限，普通用户test1是怎样把密码写进去的呢？这里要看着普通用户test1修改密码执行的是那个二进制文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 test1]# which passwd</span><br><span class="line">&#x2F;usr&#x2F;bin&#x2F;passwd</span><br><span class="line">[root@RHEL1 test1]# ll &#x2F;usr&#x2F;bin&#x2F;passwd</span><br><span class="line">-rwsr-xr-x. 1 root root 34512 Aug 12  2018 &#x2F;usr&#x2F;bin&#x2F;passwd</span><br></pre></td></tr></table></figure>
+<p>普通文件：rwx 带SUID的文件：rws<br>SUID: 当一个s权限出现在拥有者的x位上<br>作用： 当一个普通用户test1去执行一个带有SUID的二进制文件（passwd），那么这个用户（test1）在执行过程中，会暂时获得获取到这个二进制文件（passwd）的拥有者（root）的权限！后续操作比如修改（passwd)这个文件的时候，会拿着（root）这个拥有者的身份去执行，这个操作仅仅对二进制文件生效<br>原理： 普通用户执行passwd—&gt;/etc/shadow—&gt;root身份去执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@RHEL1 test1]# ps -ef | grep passwd</span><br><span class="line">root       5110   4430  0 10:01 pts&#x2F;1    00:00:00 grep --color&#x3D;auto passwd</span><br></pre></td></tr></table></figure>
+<p>Tips:如果是rw5，则本身文件没执行权限的，仅仅获得了SUID功能而已，SGID同样适用<br><strong>操作方法：shmod u+s fiename</strong><br>(2)SGID<br>SGID:当一个是权限出现在属组的x位上<br>1）针对二进制文件： 文件执行过程中获取文件属组的权限<br>2）针对目录：默认情况下， 我们新建一个文件或目录的时候，它的属组是这个用户的初始组<br>3）加上SGID之后 ， 其下新建的文件会继承该目录的属组<br>4）操作方法：chmod g+s filename /dirname</p>
+<p>sticky bit (粘滞位)<br>sticky bit : 仅对目录生效，若改目录其他人得到执行权限出现 T， 那么该目录下的文件或目录，仅文件所有者及root用户能删除<br>操作方法：chmod o+t dirname</p>
+<p>超级权限数值法：suid 4xxx /sgid 2xxx / sticky bit 1xxx</p>
+<p>（4）写保护特殊权限：i和a<br>操作方法：<br>修改：chattr + i/+a  filename<br>列出：lsattr filename<br>+i :硬写保护，只能读不能写，不能删除<br>+a：软写保护 ，只能度不能写，不能删除原有的内容，但是能通过重定向追加更新内容</p>
+<h5 id="对特定文件设置acl文件权限"><a href="#对特定文件设置acl文件权限" class="headerlink" title="对特定文件设置acl文件权限"></a>对特定文件设置acl文件权限</h5><p>1，查看 getfacl<br>[root@RHEL1 tmp]# getfacl messages<br>\  # file: messages<br>\  # owner: root<br>\  # group: root<br>user::rw-<br>group::—<br>other::—</p>
 
       
 
@@ -235,17 +288,6 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">--AAA --知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
@@ -296,7 +338,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/12/14/AAA/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2021/01/13/%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -310,18 +352,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/12/14/ENSP%E8%BF%9B%E5%85%A5%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5%E8%A7%86%E5%9B%BE/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/01/13/%E7%94%A8%E6%88%B7%E5%92%8C%E7%BB%84/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          华为防火墙
+          用户和组
         
       </div>
     </a>
   
   
-    <a href="/2020/12/14/VRF%E6%84%9F%E7%9F%A5%E5%9E%8B%E9%98%B2%E7%81%AB%E5%A2%99/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">VRF基础介绍</div>
+    <a href="/2021/01/13/%E8%BF%9B%E7%A8%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">进程</div>
       <i class="icon-circle-right"></i>
     </a>
   
